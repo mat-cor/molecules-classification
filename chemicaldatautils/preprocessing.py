@@ -28,12 +28,5 @@ write_dataset(path+'Dataset.tab', c, s, n, f, t)
 
 # Recompute and save the memberships matrix
 cids, smiles, names, formulas, terms, treeids, tset = loadDataset(path+'Dataset.tab')
-
-print(len(cids))
-print(len(tset))
-
 m2, term_labels2 = membershipMatrix(tset, terms)
-
-print(m2.shape)
-
 saveMatrixTab(path+'Memberships.tab', m2, term_labels2, cids)

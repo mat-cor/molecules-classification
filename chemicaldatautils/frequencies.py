@@ -42,15 +42,3 @@ def saveTermPC(o, cid, fname):
         f.write(str(o[i]) + '\n')
 
     f.close()
-
-# # plt.figure(1)
-# # plt.hist(frequency, bins=30)
-# # plt.title("Terms Distribution")
-# # plt.figure(2)
-# # plt.hist(termComp, bins=8)
-# # plt.title("Number of Terms per Compound")
-# # plt.show()
-
-
-
-
