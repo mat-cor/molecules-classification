@@ -1,4 +1,4 @@
-def exclude_rares(min_freq, cids, smiles, names, formulas, terms, t2freq):
+def exclude_rare(min_freq, cids, smiles, names, formulas, terms, t2freq):
     cids_out, smiles_out, names_out, formulas_out, terms_out = [], [], [], [], []
 
     for c, s, n, f, t_list in zip(cids, smiles, names, formulas, terms):
@@ -18,7 +18,7 @@ def exclude_rares(min_freq, cids, smiles, names, formulas, terms, t2freq):
     return cids_out, smiles_out, names_out, formulas_out, terms_out
 
 
-def exclude_duplicates(cids, smiles, names, formulas, terms):
+def exclude_duplicate(cids, smiles, names, formulas, terms):
     '''Found a set of SMILES, it will save only the first element with each SMILES'''
     smiles_set = set(smiles)
     cids_out, smiles_out, names_out, formulas_out, terms_out = [], [], [], [], []
