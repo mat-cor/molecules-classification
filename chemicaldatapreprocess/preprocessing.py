@@ -1,7 +1,7 @@
-from chemicaldatautils.load_data import loadDataset, write_dataset
-from chemicaldatautils.compute_memberships import membershipMatrix, saveMatrixTab
-from chemicaldatautils.frequencies import termsFrequency
-from chemicaldatautils.exclude_compounds import exclude_duplicate, exclude_rare
+from chemicaldatapreprocess.load_data import loadDataset, write_dataset
+from chemicaldatapreprocess.compute_memberships import membershipMatrix, saveMatrixTab
+from chemicaldatapreprocess.frequencies import termsFrequency
+from chemicaldatapreprocess.exclude_compounds import exclude_duplicate, exclude_rare
 
 # First load the dataset
 path = '/home/mattia/Thesis/Data/'
