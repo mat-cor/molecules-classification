@@ -1,10 +1,11 @@
+import datetime
+
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
-from chemicaldatapreprocess.load_data import loadDataset
-from fingerprintsanalysis.rdkutils import smiles_list_fp
 
-import datetime
+from preprocess.load_data import loadDataset
+from preprocess.rdkutils import smiles_list_fp
 
 path = '/home/mattia/Thesis/Data/'
 
