@@ -9,7 +9,7 @@ from preprocess.rdkutils import smiles_list_fp
 
 path = '/home/mattia/Thesis/Data/'
 
-cids, smiles, names, formulas, terms, treeids, tset = loadDataset(path+'Dataset.tab')
+cids, smiles, names, formulas, terms, treeids, tset = loadDataset(path+'dataset.tab')
 
 X, bad_smiles = smiles_list_fp(smiles, 2, 1024, 'rdk')
 

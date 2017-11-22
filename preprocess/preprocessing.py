@@ -30,9 +30,9 @@ for fr, te in zip(frequency, term_labels):
 c, s, n, f, t = exclude_rare(20, cids_u, smiles_u, names_u, formulas_u, terms_u, term2freq)
 
 # Save the processesed dataset
-write_dataset(path+'Dataset.tab', c, s, n, f, t)
+write_dataset(path+'dataset.tab', c, s, n, f, t)
 
 # Recompute and save the memberships matrix
-cids, smiles, names, formulas, terms, treeids, tset = loadDataset(path+'Dataset.tab')
+cids, smiles, names, formulas, terms, treeids, tset = loadDataset(path+'dataset.tab')
 m2, term_labels2 = membershipMatrix(tset, terms)
-saveMatrixTab(path+'Memberships.tab', m2, term_labels2, cids)
+saveMatrixTab(path+'memberships.tab', m2, term_labels2, cids)
