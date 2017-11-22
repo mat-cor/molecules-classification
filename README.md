@@ -2,7 +2,7 @@
 Small molecules classification using deep learning models
 
 
-Histograms Notebook: https://github.com/mat-cor/molecules-classification/blob/master/Histograms.ipynb
+Histograms Notebook: https://github.com/mat-cor/molecules-classification/blob/master/Histograms%20Notebook/Histograms.ipynb
 
 LogReg Notebook: https://github.com/mat-cor/molecules-classification/blob/master/LogisticRegression.ipynb
 
