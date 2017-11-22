@@ -38,7 +38,7 @@ for term in tset:
             y[i] = 1
 
     logreg = LogisticRegression()
-    auc = cross_val_score(logreg, X, y, cv=10, scoring='roc_auc', n_jobs=-1)
+    auc = cross_val_score(logreg, X, y, cv=10, scoring='roc_auc', n_jobs=6)
 
     f.write('%s\t%5.3f\t%5.3f\n' % (term, auc.mean(), auc.std()))
     print(datetime.datetime.now())
