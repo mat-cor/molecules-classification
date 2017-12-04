@@ -1,6 +1,7 @@
 # molecules-classification
 Small molecules classification using deep learning models
 
+- SMILES CNN Classification: https://github.com/mat-cor/molecules-classification/blob/master/notebooks/smiles-cnn-classification.ipynb
 
 - Basic Statistics nb: https://github.com/mat-cor/molecules-classification/blob/master/notebooks/basic-statistics.ipynb
 
@@ -12,4 +13,4 @@ Small molecules classification using deep learning models
 Packages:
 - "preprocess" package contains the modules for preprocessing the data (basically discarding duplicated chemicals and non frequent terms, compute the "memberships" for the terms and convert the SMILES to fingerprints)
 
-- "analysis" package contains fingerprint classification with LR
+- "analysis" package contains fingerprint classification with LR and SMILES classification using CNN
