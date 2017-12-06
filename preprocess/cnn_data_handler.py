@@ -6,7 +6,7 @@ from preprocess.load_data import loadDataset
 import numpy as np
 
 DATA_LOC = '../data/'
-filepath = os.path.join(DATA_LOC, 'dataset.tab')
+filepath = os.path.join(DATA_LOC, 'dataset10_400.tab')
 
 
 def getSMILES(file):
@@ -34,8 +34,8 @@ def get_labels(file):
 
 
 def main():
-    np.save(DATA_LOC+'smiles', getSMILES(filepath))
-    np.save(DATA_LOC+'multi_labels', get_labels(filepath))
+    np.save(DATA_LOC+'smiles10_400', getSMILES(filepath))
+    np.save(DATA_LOC+'multi_labels10_400', get_labels(filepath))
 
 
 if __name__ == "__main__":
