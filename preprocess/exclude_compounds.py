@@ -59,7 +59,7 @@ def exclude_size(cids, smiles, names, formulas, terms, tset, min_size, max_size)
     cids_out, smiles_out, names_out, formulas_out, terms_out, tset_out = [], [], [], [], [], []
     
     for c, s, n, f, t_list in zip(cids, smiles, names, formulas, terms):
-        if min_size < len(s) < max_size:
+        if min_size <= len(s) <= max_size:
             cids_out.append(c)
             smiles_out.append(s)
             names_out.append(n)

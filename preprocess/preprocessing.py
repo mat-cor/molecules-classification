@@ -15,13 +15,12 @@ cids_u, smiles_u, names_u, formulas_u, terms_u, tset_u = exclude_duplicate(cids_
 c1, s1, n1, f1, t1, tset1 = exclude_size(cids_u, smiles_u, names_u, formulas_u, terms_u, tset_u, 10, 400)
 
 # Exclude terms with frequency < 20
-c, s, n, f, t, tset = exclude_rare(20, cids_u, smiles_u, names_u, formulas_u, terms_u, tset_u)
+# c, s, n, f, t, tset = exclude_rare(20, cids_u, smiles_u, names_u, formulas_u, terms_u, tset_u)
 c2, s2, n2, f2, t2, tset2 = exclude_rare(20, c1, s1, n1, f1, t1, tset1)
 
 # Save the processed data
 # write_dataset(path+'dataset.tab', c, s, n, f, t)
 write_dataset(path+'dataset10_400.tab', c2, s2, n2, f2, t2)
-
 
 # Compute and save the memberships matrix
 # cids, smiles, names, formulas, terms, treeids, tset = loadDataset(path+'dataset.tab')
