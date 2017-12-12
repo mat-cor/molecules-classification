@@ -9,7 +9,8 @@ from sklearn.model_selection import KFold
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential
-from keras.layers import Convolution1D, MaxPooling1D, GlobalMaxPooling1D, Dropout, Dense
+from keras.layers import Convolution1D, MaxPooling1D, GlobalMaxPooling1D
+from keras.layers import Dropout, Dense, Flatten
 from keras.layers.embeddings import Embedding
 from keras.optimizers import SGD
 from keras import regularizers
@@ -55,9 +56,7 @@ for train, test in kfold.split(X, y):
     model.add(Convolution1D(64, 3, activation='relu', kernel_regularizer=regularizers.l2(0.2)))
     model.add(MaxPooling1D(pool_size=2))
     model.add(Dropout(0.25))
-    model.add(Convolution1D(64, 3, activation='relu', kernel_regularizer=regularizers.l2(0.2)))
-    model.add(GlobalMaxPooling1D())
-    model.add(Dropout(0.25))
+    model.add(Flatten())
     model.add(Dense(1024, activation='relu'))
     model.add(Dropout(0.25))
     model.add(Dense(n_class, activation='sigmoid'))
