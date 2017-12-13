@@ -57,15 +57,15 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 DATA_LOC = '../data/'
-smiles = np.load(DATA_LOC+'smiles10_400.npy')
+smiles = np.load(DATA_LOC+'smiles.npy')
 t = Tokenizer(filters='', lower=False, char_level=True)
 t.fit_on_texts(smiles)
 seqs = t.texts_to_sequences(smiles)
 X = pad_sequences(seqs, padding='post')
-y = np.load(DATA_LOC+'multi_labels10_400.npy')
+y = np.load(DATA_LOC+'multi_labels.npy')
 
 # Split in train and test
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 print('Number of examples: ', X_train.shape[0])
 print('Multi-label classification, number of classes: ', y.shape[1])
 
@@ -90,7 +90,7 @@ model.add(Dense(n_class, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
-model.fit(X_train, y_train, epochs=500, batch_size=64, verbose=1)
+model.fit(X_train, y_train, epochs=300, batch_size=64, verbose=1)
 out = model.predict(X_test)
 out = np.array(out, dtype=np.float32)
 
@@ -116,6 +116,7 @@ for i in range(out.shape[1]):
     acc = []
 y_pred = np.array([[1 if out[i,j]>=best_threshold[j] else 0 for j\
                     in range(y_test.shape[1])] for i in range(len(y_test))])
+
 total_correctly_predicted = len([i for i in range(len(y_test)) if (y_test[i]==y_pred[i]).sum() == n_class])
 
 print('hamming_loss: ', hamming_loss(y_test, y_pred))
