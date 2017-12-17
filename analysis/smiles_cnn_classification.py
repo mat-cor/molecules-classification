@@ -1,7 +1,7 @@
-import matplotlib
-matplotlib.use('Agg')
 import os
 import sys
+import csv
+import pickle
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
@@ -57,6 +57,8 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 DATA_LOC = '../data/'
+with open(DATA_LOC+'termdict.pickle', 'rb') as handle:
+    termdict = pickle.load(handle)
 smiles = np.load(DATA_LOC+'smiles.npy')
 t = Tokenizer(filters='', lower=False, char_level=True)
 t.fit_on_texts(smiles)
@@ -124,6 +126,12 @@ print('MCC for each label:\n', accuracies)
 print('Acc: ', str(total_correctly_predicted/y_test.shape[0]))
 print('total_correctly_predicted: ', total_correctly_predicted)
 
+with open('labels_mcc.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+    
+    for mcc, i in enumerate(accuracies):
+        writer.writerow([termdict[i], mcc])
+                            
 
 # # Visualize some true labels, probs and preds
 # for x in range(10):
