@@ -38,7 +38,7 @@ def main():
     np.save(DATA_LOC+'smiles', getSMILES(filepath))
     labels, tdict = get_labels(filepath)
     np.save(DATA_LOC+'multi_labels', labels)
-    with open('termdict.pickle', 'wb') as handle:
+    with open(DATA_LOC+'termdict.pickle', 'wb') as handle:
         pickle.dump(tdict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
