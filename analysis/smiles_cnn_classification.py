@@ -90,7 +90,7 @@ model.add(Dense(n_class, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
-model.fit(X_train, y_train, epochs=300, batch_size=64, verbose=1)
+model.fit(X_train, y_train, epochs=100, batch_size=64, verbose=1)
 out = model.predict(X_test)
 out = np.array(out, dtype=np.float32)
 
@@ -119,7 +119,8 @@ y_pred = np.array([[1 if out[i,j]>=best_threshold[j] else 0 for j\
 
 total_correctly_predicted = len([i for i in range(len(y_test)) if (y_test[i]==y_pred[i]).sum() == n_class])
 
-print('hamming_loss: ', hamming_loss(y_test, y_pred))
+print('MCC for each label:\n', accuracies)
+# print('hamming_loss: ', hamming_loss(y_test, y_pred))
 print('Acc: ', str(total_correctly_predicted/y_test.shape[0]))
 print('total_correctly_predicted: ', total_correctly_predicted)
 
@@ -148,10 +149,6 @@ print('total_correctly_predicted: ', total_correctly_predicted)
 # top_out = get_top_layer_output([X_test, 0])[0]
 # print(' Output: ')
 # print(top_out)
-
-
-# # Evaluation using MCC to determine the thresholds for each label for converting
-# # probs to classes (if prob>=threshold --> label=1)
 
 
 # # Summarize accuracy history
