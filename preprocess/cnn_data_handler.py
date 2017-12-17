@@ -2,11 +2,12 @@
 Exctract the list of SMILES from the dataset and convert the labels to "one-hot" representation ([0 0 1 0 0 .. 0 1 0])
 '''
 import os
+import pickle
 from preprocess.load_data import loadDataset
 import numpy as np
 
 DATA_LOC = '../data/'
-filepath = os.path.join(DATA_LOC, 'dataset30_60.tab')
+filepath = os.path.join(DATA_LOC, 'dataset.tab')
 
 
 def getSMILES(file):
@@ -30,12 +31,15 @@ def get_labels(file):
             j = term2id[term]
             labels[i, j] = 1
 
-    return labels
+    return labels, id2term
 
 
 def main():
-    np.save(DATA_LOC+'smiles30_60', getSMILES(filepath))
-    np.save(DATA_LOC+'multi_labels30_60', get_labels(filepath))
+    np.save(DATA_LOC+'smiles', getSMILES(filepath))
+    labels, tdict = get_labels(filepath)
+    np.save(DATA_LOC+'multi_labels', labels)
+    with open('termdict.pickle', 'wb') as handle:
+        pickle.dump(tdict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
 if __name__ == "__main__":
