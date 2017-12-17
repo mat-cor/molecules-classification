@@ -66,7 +66,7 @@ y = np.load(DATA_LOC+'multi_labels.npy')
 
 # Split in train and test
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-print('Number of examples: ', X_train.shape[0])
+print('Number of train examples: ', X_train.shape[0])
 print('Multi-label classification, number of classes: ', y.shape[1])
 
 sequence_length = X.shape[1]
