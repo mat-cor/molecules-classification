@@ -68,7 +68,7 @@ y = np.load(DATA_LOC+'multi_labels.npy')
 
 # Split in train and test
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-print('Number of train examples: ', X_train.shape[0])
+print('Number of examples: ', X_train.shape[0])
 print('Multi-label classification, number of classes: ', y.shape[1])
 
 sequence_length = X.shape[1]
@@ -121,15 +121,14 @@ y_pred = np.array([[1 if out[i,j]>=best_threshold[j] else 0 for j\
 
 total_correctly_predicted = len([i for i in range(len(y_test)) if (y_test[i]==y_pred[i]).sum() == n_class])
 
-print('MCC for each label:\n', accuracies)
-# print('hamming_loss: ', hamming_loss(y_test, y_pred))
+print('hamming_loss: ', hamming_loss(y_test, y_pred))
 print('Acc: ', str(total_correctly_predicted/y_test.shape[0]))
 print('total_correctly_predicted: ', total_correctly_predicted)
 
 with open('labels_mcc.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+    writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
     
-    for mcc, i in enumerate(accuracies):
+    for i, mcc in enumerate(accuracies):
         writer.writerow([termdict[i], mcc])
                             
 
