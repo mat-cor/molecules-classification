@@ -9,8 +9,8 @@ import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
-from sklearn.metrics import matthews_corrcoef
-from sklearn.metrics import hamming_loss
+from sklearn.metrics import matthews_corrcoef, jaccard_similarity_score
+from sklearn.metrics import hamming_loss, accuracy_score, roc_auc_score
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -66,8 +66,10 @@ seqs = t.texts_to_sequences(smiles)
 X = pad_sequences(seqs, padding='post')
 y = np.load(DATA_LOC+'multi_labels.npy')
 
+seed = 7
+np.random.seed(seed)
 # Split in train and test
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=seed)
 print('Number of examples: ', X_train.shape[0])
 print('Multi-label classification, number of classes: ', y.shape[1])
 
@@ -84,21 +86,15 @@ model.add(Convolution1D(32, 2, activation='relu'))
 model.add(MaxPooling1D(pool_size=2))
 model.add(Convolution1D(32, 3, activation='relu'))
 model.add(MaxPooling1D(pool_size=3))
-# model.add(Convolution1D(32, 3, activation='relu'))
-# model.add(MaxPooling1D(pool_size=3))
 model.add(Flatten())
 model.add(Dense(512, activation='relu'))
 model.add(Dense(n_class, activation='sigmoid'))
-
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
 model.fit(X_train, y_train, epochs=100, batch_size=64, verbose=1)
+
 out = model.predict(X_test)
 out = np.array(out, dtype=np.float32)
-
-# # Thresholdin probabilites at 0.5
-# y_pred = np.zeros(out.shape)
-# y_pred[np.where(out>=0.5)] = 1
 
 # # Thresholding probabilities adapting the threshold for each label
 threshold = np.arange(0.1,1,0.1)
@@ -121,16 +117,23 @@ y_pred = np.array([[1 if out[i,j]>=best_threshold[j] else 0 for j\
 
 total_correctly_predicted = len([i for i in range(len(y_test)) if (y_test[i]==y_pred[i]).sum() == n_class])
 
-print('hamming_loss: ', hamming_loss(y_test, y_pred))
-print('Acc: ', str(total_correctly_predicted/y_test.shape[0]))
-print('total_correctly_predicted: ', total_correctly_predicted)
+print('Accuracy (manual): ', str(total_correctly_predicted/y_test.shape[0]))
+print('Accuracy (sklearn): ', str(accuracy_score(y_test, y_pred)))
+print('Hamming loss: ', hamming_loss(y_test, y_pred))
+print('Jaccard: ', jaccard_similarity_score(y_test, y_pred))
+print('AUC score (micro): ', str(roc_auc_score(y_test, out, average='micro')))
+print('AUC score (samples): ', str(roc_auc_score(y_test, out, average='samples')))
+print('AUC score (macro): ', str(roc_auc_score(y_test, out, average='macro')))
+print('AUC score (weighted): ', str(roc_auc_score(y_test, out, average='weighted')))
+aucs = roc_auc_score(y_test, out, average= None)
+print('AUC score (for each labels): ', str(aucs))
 
-with open('labels_mcc.csv', 'w', newline='') as csvfile:
+with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
-    
-    for i, mcc in enumerate(accuracies):
-        writer.writerow([termdict[i], mcc])
+    for i, auc in enumerate(aucs):
+        writer.writerow([termdict[i], auc])
                             
+
 
 # # Visualize some true labels, probs and preds
 # for x in range(10):
