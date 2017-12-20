@@ -9,8 +9,9 @@ import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
-from sklearn.metrics import matthews_corrcoef, jaccard_similarity_score
-from sklearn.metrics import hamming_loss, accuracy_score, roc_auc_score
+from sklearn.model_selection import StratifiedKFold
+from sklearn.metrics import matthews_corrcoef
+from sklearn.metrics import accuracy_score, roc_auc_score, f1_score
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -46,6 +47,7 @@ def weighted_binary_crossentropy(target, output):
     return tf.reduce_mean(loss, axis=-1)
 
 
+
 # The default Tensorflow behavior is to allocate memory on all the available GPUs, even if it runs only on the selected
 # one. To avoid it, only the free GPU (defined by cmd line input)
 gpu = str(sys.argv[1])
@@ -65,12 +67,9 @@ seqs = t.texts_to_sequences(smiles)
 X = pad_sequences(seqs, padding='post')
 y = np.load(DATA_LOC+'multi_labels.npy')
 
-seed = 7
-np.random.seed(seed)
-# Split in train and test
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=seed)
-print('Number of examples: ', X_train.shape[0])
-print('Multi-label classification, number of classes: ', y.shape[1])
+
+# define 5-fold cross validation test harness
+kfold = KFold(n_splits=5, shuffle=True)
 
 sequence_length = X.shape[1]
 vocabulary_size = len(t.word_index)
@@ -89,49 +88,76 @@ model.add(Flatten())
 model.add(Dense(512, activation='relu'))
 model.add(Dense(n_class, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-print(model.summary())
-model.fit(X_train, y_train, epochs=100, batch_size=64, verbose=1)
 
-out = model.predict(X_test)
-out = np.array(out, dtype=np.float32)
+average_auc, average_ca, average_f1 = [], [], []  # average metric value for each fold
+labels_auc, labels_ca, labels_f1 = [], [], []  # list of metric values for each 
+                                               # label, for each fold
+f = 0
 
-# # Thresholding probabilities adapting the threshold for each label
-threshold = np.arange(0.1,1,0.1)
-acc = []
-accuracies = []
-best_threshold = np.zeros(out.shape[1])
+for train, test in kfold.split(X, y):
+    print('Fold ', f)
+    f += 1
+    X_train = X[train]
+    y_train = y[train]
+    X_test = X[test]
+    y_test = y[test]
+    # Fit the model
+    model.fit(X_train, y_train, epochs=100, batch_size=64, verbose=0)
+    # Evaluate the model
+    out = model.predict(X_test)
+    out = np.array(out, dtype=np.float32)
+    # Thresholding probabilities adapting the threshold for each label
+    threshold = np.arange(0.1,1,0.1)
+    mcc = []
+    accuracies = []
+    best_threshold = np.zeros(out.shape[1])
+    
+    for i in range(out.shape[1]):
+        y_prob = np.array(out[:,i])
+        for j in threshold:
+            y_pred = [1 if prob>=j else 0 for prob in y_prob]
+            mcc.append(matthews_corrcoef(y_test[:,i], y_pred))
+        mcc = np.array(mcc)
+        index = np.where(mcc==mcc.max()) 
+        accuracies.append(mcc.max()) 
+        best_threshold[i] = threshold[index[0][0]]
+        mcc = []
+    
+    y_pred = np.array([[1 if out[i,j]>=best_threshold[j] else 0 for j\
+                        in range(y_test.shape[1])] for i in range(len(y_test))])
+                        
+    average_auc.append(roc_auc_score(y_test, out, average='micro'))     
+    average_ca.append(accuracy_score(y_test, y_pred))    
+    average_f1.append(f1_score(y_test, y_pred, average='micro'))
+    
+    labels_auc.append(roc_auc_score(y_test, out, average=None))
+    labels_ca.append([accuracy_score(y_test[:, i], y_pred[:, i]) for i in range(n_class)])
+    labels_f1.append(f1_score(y_test, y_pred, average=None))    
 
-for i in range(out.shape[1]):
-    y_prob = np.array(out[:,i])
-    for j in threshold:
-        y_pred = [1 if prob>=j else 0 for prob in y_prob]
-        acc.append(matthews_corrcoef(y_test[:,i], y_pred))
-    acc = np.array(acc)
-    index = np.where(acc==acc.max()) 
-    accuracies.append(acc.max()) 
-    best_threshold[i] = threshold[index[0][0]]
-    acc = []
-y_pred = np.array([[1 if out[i,j]>=best_threshold[j] else 0 for j\
-                    in range(y_test.shape[1])] for i in range(len(y_test))])
+labels_auc = np.array(labels_auc)
+labels_ca = np.array(labels_ca)
+labels_f1 = np.array(labels_f1)
 
-# total_correctly_predicted = len([i for i in range(len(y_test)) if (y_test[i]==y_pred[i]).sum() == n_class])
-
-# print('Accuracy (manual): ', str(total_correctly_predicted/y_test.shape[0]))
-print('Classification Accuracy: ', str(accuracy_score(y_test, y_pred)))
-print('Hamming loss: ', hamming_loss(y_test, y_pred))
-print('Jaccard: ', jaccard_similarity_score(y_test, y_pred))
-print('AUC score (micro): ', str(roc_auc_score(y_test, out, average='micro')))
-print('AUC score (samples): ', str(roc_auc_score(y_test, out, average='samples')))
-print('AUC score (macro): ', str(roc_auc_score(y_test, out, average='macro')))
-print('AUC score (weighted): ', str(roc_auc_score(y_test, out, average='weighted')))
-aucs = roc_auc_score(y_test, out, average= None)
-print('AUC score (for each labels): ', str(aucs))
-
-with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
+with open('multilabels_5CV.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
-    for i, auc in enumerate(aucs):
-        writer.writerow([termdict[i], auc])
-                            
+    writer.writerow(['Term', 'AUC', 'CA', 'F1'])
+    writer.writerow(['Average',
+                    str(round(np.mean(average_auc), 2))+'('+str(round(np.std(average_auc), 2))+')',
+                    str(round(np.mean(average_ca), 2))+'('+str(round(np.std(average_ca), 2))+')',
+                    str(round(np.mean(average_f1), 2))+'('+str(round(np.std(average_f1), 2))+')'])
+                    
+    for i in range(n_class):
+        auc = str(round(np.mean(labels_auc[:, i]), 2))
+        auc_s = str(round(np.std(labels_auc[:, i]), 2))
+        ca = str(round(np.mean(labels_ca[:, i]), 2))
+        ca_s = str(round(np.std(labels_ca[:, i]), 2))
+        f1 = str(round(np.mean(labels_f1[:, i]), 2))
+        f1_s = str(round(np.std(labels_f1[:, i]), 2))
+        writer.writerow([termdict[i],
+                        auc+'('+auc_s+')',
+                        ca+'('+ca_s+')',
+                        f1+'('+f1_s+')'])
+
 
 
 # # Visualize some true labels, probs and preds

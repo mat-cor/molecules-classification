@@ -71,7 +71,7 @@ for i in range(n_class):
     y_train = y_train_m[:, i]
     y_test = y_test_m[:, i]
     
-    model.fit(X_train, y_train, epochs=10, batch_size=64, verbose=0)
+    model.fit(X_train, y_train, epochs=10, batch_size=64, verbose=1)
     # evaluate the model
     probs = model.predict(X_test)
     auc.append(roc_auc_score(y_test, probs))
@@ -79,7 +79,7 @@ for i in range(n_class):
     print(termdict[i], auc[i])
     
 
-with open('labels_auc.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)    
-    for i, auc in enumerate(auc):
-        writer.writerow([termdict[i], auc])
+# with open('labels_auc.csv', 'w', newline='') as csvfile:
+#     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)    
+#     for i, auc in enumerate(auc):
+#         writer.writerow([termdict[i], auc])
