@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 from sklearn.metrics import matthews_corrcoef, jaccard_similarity_score
-from sklearn.metrics import hamming_loss, accuracy_score, roc_auc_score
+from sklearn.metrics import hamming_loss, accuracy_score, roc_auc_score, f1_score
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
@@ -22,28 +22,28 @@ from keras import regularizers
 from keras import backend as K
 
 
-POS_WEIGHT = 10  # multiplier for positive targets, needs to be tuned
-def weighted_binary_crossentropy(target, output):
-    """
-    Weighted binary crossentropy between an output tensor 
-    and a target tensor. POS_WEIGHT is used as a multiplier 
-    for the positive targets.
+# POS_WEIGHT = 10  # multiplier for positive targets, needs to be tuned
+# def weighted_binary_crossentropy(target, output):
+#     """
+#     Weighted binary crossentropy between an output tensor 
+#     and a target tensor. POS_WEIGHT is used as a multiplier 
+#     for the positive targets.
 
-    Combination of the following functions:
-    * keras.losses.binary_crossentropy
-    * keras.backend.tensorflow_backend.binary_crossentropy
-    * tf.nn.weighted_cross_entropy_with_logits
-    """
-    tfb = K.tensorflow_backend
-    # transform back to logits
-    _epsilon = tfb._to_tensor(tfb.epsilon(), output.dtype.base_dtype)
-    output = tf.clip_by_value(output, _epsilon, 1 - _epsilon)
-    output = tf.log(output / (1 - output))
-    # compute weighted loss
-    loss = tf.nn.weighted_cross_entropy_with_logits(targets=target,
-                                                    logits=output,
-                                                    pos_weight=POS_WEIGHT)
-    return tf.reduce_mean(loss, axis=-1)
+#     Combination of the following functions:
+#     * keras.losses.binary_crossentropy
+#     * keras.backend.tensorflow_backend.binary_crossentropy
+#     * tf.nn.weighted_cross_entropy_with_logits
+#     """
+#     tfb = K.tensorflow_backend
+#     # transform back to logits
+#     _epsilon = tfb._to_tensor(tfb.epsilon(), output.dtype.base_dtype)
+#     output = tf.clip_by_value(output, _epsilon, 1 - _epsilon)
+#     output = tf.log(output / (1 - output))
+#     # compute weighted loss
+#     loss = tf.nn.weighted_cross_entropy_with_logits(targets=target,
+#                                                     logits=output,
+#                                                     pos_weight=POS_WEIGHT)
+#     return tf.reduce_mean(loss, axis=-1)
 
 
 # The default Tensorflow behavior is to allocate memory on all the available GPUs, even if it runs only on the selected
@@ -114,24 +114,24 @@ for i in range(out.shape[1]):
 y_pred = np.array([[1 if out[i,j]>=best_threshold[j] else 0 for j\
                     in range(y_test.shape[1])] for i in range(len(y_test))])
 
-# total_correctly_predicted = len([i for i in range(len(y_test)) if (y_test[i]==y_pred[i]).sum() == n_class])
+# y_pred = np.zeros(out.shape)
+# y_pred[np.where(out>=0.5)] = 1
 
+# total_correctly_predicted = len([i for i in range(len(y_test)) if (y_test[i]==y_pred[i]).sum() == n_class])
 # print('Accuracy (manual): ', str(total_correctly_predicted/y_test.shape[0]))
-print('Classification Accuracy: ', str(accuracy_score(y_test, y_pred)))
-print('Hamming loss: ', hamming_loss(y_test, y_pred))
-print('Jaccard: ', jaccard_similarity_score(y_test, y_pred))
-print('AUC score (micro): ', str(roc_auc_score(y_test, out, average='micro')))
-print('AUC score (samples): ', str(roc_auc_score(y_test, out, average='samples')))
-print('AUC score (macro): ', str(roc_auc_score(y_test, out, average='macro')))
-print('AUC score (weighted): ', str(roc_auc_score(y_test, out, average='weighted')))
-aucs = roc_auc_score(y_test, out, average= None)
-print('AUC score (for each labels): ', str(aucs))
+
+ca_av = accuracy_score(y_test, y_pred)
+auc_av = roc_auc_score(y_test, out, average='micro')
+print('Classification Accuracy: ', ca_av)
+print('AUC: ', auc_av)
+
+aucs = roc_auc_score(y_test, out, average=None)
 
 with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
+    writer.writerow(['Term', 'auc'])
     for i, auc in enumerate(aucs):
         writer.writerow([termdict[i], auc])
-                            
 
 
 # # Visualize some true labels, probs and preds

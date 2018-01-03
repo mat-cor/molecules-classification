@@ -23,31 +23,6 @@ from keras import regularizers
 from keras import backend as K
 
 
-POS_WEIGHT = 10  # multiplier for positive targets, needs to be tuned
-def weighted_binary_crossentropy(target, output):
-    """
-    Weighted binary crossentropy between an output tensor 
-    and a target tensor. POS_WEIGHT is used as a multiplier 
-    for the positive targets.
-
-    Combination of the following functions:
-    * keras.losses.binary_crossentropy
-    * keras.backend.tensorflow_backend.binary_crossentropy
-    * tf.nn.weighted_cross_entropy_with_logits
-    """
-    tfb = K.tensorflow_backend
-    # transform back to logits
-    _epsilon = tfb._to_tensor(tfb.epsilon(), output.dtype.base_dtype)
-    output = tf.clip_by_value(output, _epsilon, 1 - _epsilon)
-    output = tf.log(output / (1 - output))
-    # compute weighted loss
-    loss = tf.nn.weighted_cross_entropy_with_logits(targets=target,
-                                                    logits=output,
-                                                    pos_weight=POS_WEIGHT)
-    return tf.reduce_mean(loss, axis=-1)
-
-
-
 # The default Tensorflow behavior is to allocate memory on all the available GPUs, even if it runs only on the selected
 # one. To avoid it, only the free GPU (defined by cmd line input)
 gpu = str(sys.argv[1])
@@ -76,23 +51,10 @@ vocabulary_size = len(t.word_index)
 n_class = y.shape[1]
 embedding_size = 64
 
-# Model
-model = Sequential()
-model.add(Embedding(output_dim=embedding_size, input_dim=vocabulary_size,
-                    input_length=sequence_length))
-model.add(Convolution1D(32, 2, activation='relu'))
-model.add(MaxPooling1D(pool_size=2))
-model.add(Convolution1D(32, 3, activation='relu'))
-model.add(MaxPooling1D(pool_size=3))
-model.add(Flatten())
-model.add(Dense(512, activation='relu'))
-model.add(Dense(n_class, activation='sigmoid'))
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-
 average_auc, average_ca, average_f1 = [], [], []  # average metric value for each fold
 labels_auc, labels_ca, labels_f1 = [], [], []  # list of metric values for each 
                                                # label, for each fold
-f = 0
+f = 1
 
 for train, test in kfold.split(X, y):
     print('Fold ', f)
@@ -101,6 +63,18 @@ for train, test in kfold.split(X, y):
     y_train = y[train]
     X_test = X[test]
     y_test = y[test]
+    # Model
+    model = Sequential()
+    model.add(Embedding(output_dim=embedding_size, input_dim=vocabulary_size,
+                        input_length=sequence_length))
+    model.add(Convolution1D(32, 2, activation='relu'))
+    model.add(MaxPooling1D(pool_size=2))
+    model.add(Convolution1D(32, 3, activation='relu'))
+    model.add(MaxPooling1D(pool_size=3))
+    model.add(Flatten())
+    model.add(Dense(512, activation='relu'))
+    model.add(Dense(n_class, activation='sigmoid'))
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     # Fit the model
     model.fit(X_train, y_train, epochs=100, batch_size=64, verbose=0)
     # Evaluate the model
@@ -127,36 +101,15 @@ for train, test in kfold.split(X, y):
                         in range(y_test.shape[1])] for i in range(len(y_test))])
                         
     average_auc.append(roc_auc_score(y_test, out, average='micro'))     
-    average_ca.append(accuracy_score(y_test, y_pred))    
-    average_f1.append(f1_score(y_test, y_pred, average='micro'))
-    
-    labels_auc.append(roc_auc_score(y_test, out, average=None))
-    labels_ca.append([accuracy_score(y_test[:, i], y_pred[:, i]) for i in range(n_class)])
-    labels_f1.append(f1_score(y_test, y_pred, average=None))    
+    average_ca.append(accuracy_score(y_test, y_pred))
 
-labels_auc = np.array(labels_auc)
-labels_ca = np.array(labels_ca)
-labels_f1 = np.array(labels_f1)
 
 with open('multilabels_5CV.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(['Term', 'AUC', 'CA', 'F1'])
-    writer.writerow(['Average',
-                    str(round(np.mean(average_auc), 2))+'('+str(round(np.std(average_auc), 2))+')',
-                    str(round(np.mean(average_ca), 2))+'('+str(round(np.std(average_ca), 2))+')',
-                    str(round(np.mean(average_f1), 2))+'('+str(round(np.std(average_f1), 2))+')'])
+    writer.writerow(['AUC', 'CA'])
+    writer.writerow([str(round(np.mean(average_auc), 2))+'('+str(round(np.std(average_auc), 2))+')',
+                    str(round(np.mean(average_ca), 2))+'('+str(round(np.std(average_ca), 2))+')'])
                     
-    for i in range(n_class):
-        auc = str(round(np.mean(labels_auc[:, i]), 2))
-        auc_s = str(round(np.std(labels_auc[:, i]), 2))
-        ca = str(round(np.mean(labels_ca[:, i]), 2))
-        ca_s = str(round(np.std(labels_ca[:, i]), 2))
-        f1 = str(round(np.mean(labels_f1[:, i]), 2))
-        f1_s = str(round(np.std(labels_f1[:, i]), 2))
-        writer.writerow([termdict[i],
-                        auc+'('+auc_s+')',
-                        ca+'('+ca_s+')',
-                        f1+'('+f1_s+')'])
 
 
 
