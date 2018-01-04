@@ -91,6 +91,7 @@ model.add(Dense(n_class, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
 model.fit(X_train, y_train, epochs=100, batch_size=64, verbose=1)
+model.save('my_model.h5')
 
 out = model.predict(X_test)
 out = np.array(out, dtype=np.float32)
@@ -116,9 +117,6 @@ y_pred = np.array([[1 if out[i,j]>=best_threshold[j] else 0 for j\
 
 # y_pred = np.zeros(out.shape)
 # y_pred[np.where(out>=0.5)] = 1
-
-# total_correctly_predicted = len([i for i in range(len(y_test)) if (y_test[i]==y_pred[i]).sum() == n_class])
-# print('Accuracy (manual): ', str(total_correctly_predicted/y_test.shape[0]))
 
 ca_av = accuracy_score(y_test, y_pred)
 auc_av = roc_auc_score(y_test, out, average='micro')
@@ -158,7 +156,6 @@ with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
 # top_out = get_top_layer_output([X_test, 0])[0]
 # print(' Output: ')
 # print(top_out)
-
 
 # # Summarize accuracy history
 # plt.plot(history.history['acc'])
