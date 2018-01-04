@@ -72,64 +72,68 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 print('Number of examples: ', X_train.shape[0])
 print('Multi-label classification, number of classes: ', y.shape[1])
 
-sequence_length = X.shape[1]
-vocabulary_size = len(t.word_index)
-n_class = y.shape[1]
-embedding_size = 64
+np.save('x_test', X_test)
+np.save('x_seqs', X)
+np.save('x_seqs_labels', y)
 
-# Model
-model = Sequential()
-model.add(Embedding(output_dim=embedding_size, input_dim=vocabulary_size,
-                    input_length=sequence_length))
-model.add(Convolution1D(32, 2, activation='relu'))
-model.add(MaxPooling1D(pool_size=2))
-model.add(Convolution1D(32, 3, activation='relu'))
-model.add(MaxPooling1D(pool_size=3))
-model.add(Flatten())
-model.add(Dense(512, activation='relu'))
-model.add(Dense(n_class, activation='sigmoid'))
-model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-print(model.summary())
-model.fit(X_train, y_train, epochs=100, batch_size=64, verbose=1)
-model.save('my_model.h5')
+# sequence_length = X.shape[1]
+# vocabulary_size = len(t.word_index)
+# n_class = y.shape[1]
+# embedding_size = 64
 
-out = model.predict(X_test)
-out = np.array(out, dtype=np.float32)
+# # Model
+# model = Sequential()
+# model.add(Embedding(output_dim=embedding_size, input_dim=vocabulary_size,
+#                     input_length=sequence_length))
+# model.add(Convolution1D(32, 2, activation='relu'))
+# model.add(MaxPooling1D(pool_size=2))
+# model.add(Convolution1D(32, 3, activation='relu'))
+# model.add(MaxPooling1D(pool_size=3))
+# model.add(Flatten())
+# model.add(Dense(512, activation='relu'))
+# model.add(Dense(n_class, activation='sigmoid'))
+# model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+# print(model.summary())
+# model.fit(X_train, y_train, epochs=100, batch_size=64, verbose=1)
+# model.save('my_model.h5')
 
-# # Thresholding probabilities adapting the threshold for each label
-threshold = np.arange(0.1,1,0.1)
-acc = []
-accuracies = []
-best_threshold = np.zeros(out.shape[1])
+# out = model.predict(X_test)
+# out = np.array(out, dtype=np.float32)
 
-for i in range(out.shape[1]):
-    y_prob = np.array(out[:,i])
-    for j in threshold:
-        y_pred = [1 if prob>=j else 0 for prob in y_prob]
-        acc.append(matthews_corrcoef(y_test[:,i], y_pred))
-    acc = np.array(acc)
-    index = np.where(acc==acc.max()) 
-    accuracies.append(acc.max()) 
-    best_threshold[i] = threshold[index[0][0]]
-    acc = []
-y_pred = np.array([[1 if out[i,j]>=best_threshold[j] else 0 for j\
-                    in range(y_test.shape[1])] for i in range(len(y_test))])
+# # # Thresholding probabilities adapting the threshold for each label
+# threshold = np.arange(0.1,1,0.1)
+# acc = []
+# accuracies = []
+# best_threshold = np.zeros(out.shape[1])
 
-# y_pred = np.zeros(out.shape)
-# y_pred[np.where(out>=0.5)] = 1
+# for i in range(out.shape[1]):
+#     y_prob = np.array(out[:,i])
+#     for j in threshold:
+#         y_pred = [1 if prob>=j else 0 for prob in y_prob]
+#         acc.append(matthews_corrcoef(y_test[:,i], y_pred))
+#     acc = np.array(acc)
+#     index = np.where(acc==acc.max()) 
+#     accuracies.append(acc.max()) 
+#     best_threshold[i] = threshold[index[0][0]]
+#     acc = []
+# y_pred = np.array([[1 if out[i,j]>=best_threshold[j] else 0 for j\
+#                     in range(y_test.shape[1])] for i in range(len(y_test))])
 
-ca_av = accuracy_score(y_test, y_pred)
-auc_av = roc_auc_score(y_test, out, average='micro')
-print('Classification Accuracy: ', ca_av)
-print('AUC: ', auc_av)
+# # y_pred = np.zeros(out.shape)
+# # y_pred[np.where(out>=0.5)] = 1
 
-aucs = roc_auc_score(y_test, out, average=None)
+# ca_av = accuracy_score(y_test, y_pred)
+# auc_av = roc_auc_score(y_test, out, average='micro')
+# print('Classification Accuracy: ', ca_av)
+# print('AUC: ', auc_av)
 
-with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(['Term', 'auc'])
-    for i, auc in enumerate(aucs):
-        writer.writerow([termdict[i], auc])
+# aucs = roc_auc_score(y_test, out, average=None)
+
+# with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
+#     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
+#     writer.writerow(['Term', 'auc'])
+#     for i, auc in enumerate(aucs):
+#         writer.writerow([termdict[i], auc])
 
 
 # # Visualize some true labels, probs and preds
