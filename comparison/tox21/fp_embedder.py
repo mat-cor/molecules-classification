@@ -23,22 +23,28 @@ labels = []
 fname = 'nr-ahr.smiles'
 with open(fname, 'r') as file:
     for line in file:
-        tks = line.split('\t')
+        tks = line.strip().split('\t')
         smiles.append(tks[0])
         labels.append(tks[2])
+        
+labels = np.array(labels, dtype=np.int32)
 
-print(smiles[0])
+print(len(smiles[0]))
 print(labels[0])
 
 t = Tokenizer(filters='', lower=False, char_level=True)
 t.fit_on_texts(smiles)
 seqs = t.texts_to_sequences(smiles)
 
-data = pad_sequences(seqs, padding='post')
+data = pad_sequences(seqs, padding='post', maxlen=1021)
+
+print(len(data[0]))
+
 fp_layer_model = Model(inputs=model.input,
                                  outputs=model.layers[-2].output)
 fp_output = fp_layer_model.predict(data, batch_size=1000)
 
 print(fp_output.shape)
-np.save('my_fp_nr-ahr', fp_output)
-np.save('nr-ahr_labels', np.array(labels))
+print(fp_output[0:5])
+np.save('nr-ahr_fp', fp_output)
+np.save('nr-ahr_labels', labels)
