@@ -17,8 +17,7 @@ model = load_model('my_model.h5')
 
 data = np.load('x_seqs.npy')
 print(data.shape)
-# smiles = data[0:1]
-# print(smiles.shape)
+
 
 fp_layer_model = Model(inputs=model.input,
                                  outputs=model.layers[-2].output)
@@ -27,8 +26,3 @@ fp_output = fp_layer_model.predict(data, batch_size=1000)
 
 print(fp_output.shape)
 np.save('my_fp_data', fp_output)
-
-# get_fp_layer_output = K.function([model.layers[0].input],
-#                                     [model.layers[-2].output])
-
-# fp_output = get_fp_layer_output([data])[0]
