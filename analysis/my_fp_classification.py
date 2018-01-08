@@ -16,7 +16,6 @@ f = open('LR_auc_my_fp.tab', 'w')
 f.write('Term\tAUCmean\tAUCstd\n')
 k = 0
 
-# For each term, if it is present in the list of terms associated with the i-th chemical y[i] (target array) is set to 1
 for i in range(y.shape[1]):
 
     k += 1

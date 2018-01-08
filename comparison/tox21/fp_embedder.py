@@ -20,12 +20,15 @@ model = load_model('my_model.h5')
 
 smiles = []
 labels = []
-fname = 'nr-ahr.smiles'
+fname = 'nr-ahr_test.tab'
 with open(fname, 'r') as file:
+    next(file)
+    next(file)
+    next(file)
     for line in file:
         tks = line.strip().split('\t')
-        smiles.append(tks[0])
-        labels.append(tks[2])
+        smiles.append(tks[1])
+        labels.append(tks[0])
         
 labels = np.array(labels, dtype=np.int32)
 
@@ -35,7 +38,6 @@ print(labels[0])
 t = Tokenizer(filters='', lower=False, char_level=True)
 t.fit_on_texts(smiles)
 seqs = t.texts_to_sequences(smiles)
-
 data = pad_sequences(seqs, padding='post', maxlen=1021)
 
 print(len(data[0]))
@@ -45,6 +47,6 @@ fp_layer_model = Model(inputs=model.input,
 fp_output = fp_layer_model.predict(data, batch_size=1000)
 
 print(fp_output.shape)
-print(fp_output[0:5])
-np.save('nr-ahr_fp', fp_output)
-np.save('nr-ahr_labels', labels)
+
+np.save('nr-ahr_test_fp', fp_output)
+np.save('nr-ahr_test_labels', labels)
