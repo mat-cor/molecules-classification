@@ -4,24 +4,14 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 
-from preprocess.rdkutils import smiles_list_fp
-
 path = '../data/'
 with open(path+'termdict.pickle', 'rb') as handle:
     termdict = pickle.load(handle)
-smiles = np.load(path+'smiles.npy')
-labels = np.laod(path+'multi_labels.npy')
-X, bad_smiles = smiles_list_fp(smiles, 2, 512, 'rdk')
 
-#  Delete the rows related to chemicals with "bad" (=not-fingerprinted) SMILES
-inds = []
-for s in bad_smiles:
-    inds.append(list(smiles).index(s))
+X = np.load(path + 'smiles_rdk.npy')
+labels = np.load(path + 'smiles_rdk_labels.npy')
 
-for i in sorted(inds, reverse=True):  # Sorted in reverse order to be sure to not mess with indices
-    del labels[i]
-
-f = open(path+'LR_auc_rdk512.tab', 'w')
+f = open(path+'LR_auc_rdk.tab', 'w')
 f.write('Term\tAUCmean\n')
 k = 0
 
