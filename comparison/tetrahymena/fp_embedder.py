@@ -9,7 +9,8 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 
 
-gpu = str(sys.argv[1])
+# gpu = str(sys.argv[1])
+gpu = '0'
 os.environ["CUDA_VISIBLE_DEVICES"] = gpu
 config = tf.ConfigProto()
 config.gpu_options.allow_growth=True
@@ -21,6 +22,7 @@ model = load_model('my_model.h5')
 smiles = []
 labels = []
 fname = 'tetrahymena.tab'
+
 with open(fname, 'r') as file:
     next(file)
     next(file)
