@@ -4,7 +4,6 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 
-from preprocess.load_data import loadDataset
 from preprocess.rdkutils import smiles_list_fp
 
 path = '../data/'
