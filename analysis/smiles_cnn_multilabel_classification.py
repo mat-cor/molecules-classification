@@ -4,7 +4,9 @@ import csv
 import pickle
 import numpy as np
 import tensorflow as tf
-import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
 
 
 from sklearn.model_selection import train_test_split
@@ -14,7 +16,7 @@ from sklearn.metrics import hamming_loss, accuracy_score, roc_auc_score, f1_scor
 
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
-from keras.models import Sequential
+from keras.models import Sequential, Model
 from keras.layers import Convolution1D, MaxPooling1D, GlobalMaxPooling1D, Dropout, Dense, Flatten
 from keras.layers.embeddings import Embedding
 from keras import optimizers
@@ -72,110 +74,63 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 print('Number of examples: ', X_train.shape[0])
 print('Multi-label classification, number of classes: ', y.shape[1])
 
-np.save('x_test', X_test)
-np.save('x_seqs', X)
-np.save('x_seqs_labels', y)
+# np.save('x_test', X_test)
+# np.save('x_seqs', X)
+# np.save('x_seqs_labels', y)
 
-# sequence_length = X.shape[1]
-# vocabulary_size = len(t.word_index)
-# n_class = y.shape[1]
-# embedding_size = 64
+sequence_length = X.shape[1]
+vocabulary_size = len(t.word_index)
+n_class = y.shape[1]
+embedding_size = 64
 
-# # Model
-# model = Sequential()
-# model.add(Embedding(output_dim=embedding_size, input_dim=vocabulary_size,
-#                     input_length=sequence_length))
-# model.add(Convolution1D(32, 2, activation='relu'))
-# model.add(MaxPooling1D(pool_size=2))
-# model.add(Convolution1D(32, 3, activation='relu'))
-# model.add(MaxPooling1D(pool_size=3))
-# model.add(Flatten())
-# model.add(Dense(512, activation='relu'))
-# model.add(Dense(n_class, activation='sigmoid'))
-# model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
-# print(model.summary())
-# model.fit(X_train, y_train, epochs=100, batch_size=64, verbose=1)
-# model.save('my_model.h5')
+# Model
+model = Sequential()
+model.add(Embedding(output_dim=embedding_size, input_dim=vocabulary_size,
+                    input_length=sequence_length))
+model.add(Convolution1D(32, 2, activation='relu'))
+model.add(MaxPooling1D(pool_size=2))
+model.add(Convolution1D(32, 3, activation='relu'))
+model.add(MaxPooling1D(pool_size=3))
+model.add(Dropout(0.25))
+model.add(Flatten())
+model.add(Dense(512, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(n_class, activation='sigmoid'))
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+print(model.summary())
+model.fit(X_train, y_train, epochs=10, batch_size=64, verbose=1)
+model.save('fp-embedder.h5')
 
-# out = model.predict(X_test)
-# out = np.array(out, dtype=np.float32)
+y_prob = model.predict(X_test)
 
-# # # Thresholding probabilities adapting the threshold for each label
-# threshold = np.arange(0.1,1,0.1)
-# acc = []
-# accuracies = []
-# best_threshold = np.zeros(out.shape[1])
+# Model evaluation
+threshold = np.arange(0.1,1,0.1)
+accuracies = []
+best_threshold = np.zeros(n_class)
+for i in range(n_class):
+    acc = []
+    for j in threshold:
+        y_pred = [1 if prob>=j else 0 for prob in y_prob[:, i]]
+        acc.append(matthews_corrcoef(y_test[:,i], y_pred))
+    acc = np.array(acc)
+    index = np.where(acc==acc.max()) 
+    accuracies.append(acc.max()) 
+    best_threshold[i] = threshold[index[0][0]]
+    
+y_pred = np.array([[1 if y_prob[i,j]>=best_threshold[j] else 0 for j
+                    in range(n_class)] for i in range(len(y_test))])
 
-# for i in range(out.shape[1]):
-#     y_prob = np.array(out[:,i])
-#     for j in threshold:
-#         y_pred = [1 if prob>=j else 0 for prob in y_prob]
-#         acc.append(matthews_corrcoef(y_test[:,i], y_pred))
-#     acc = np.array(acc)
-#     index = np.where(acc==acc.max()) 
-#     accuracies.append(acc.max()) 
-#     best_threshold[i] = threshold[index[0][0]]
-#     acc = []
-# y_pred = np.array([[1 if out[i,j]>=best_threshold[j] else 0 for j\
-#                     in range(y_test.shape[1])] for i in range(len(y_test))])
+# CA and average AUC
+ca_av = accuracy_score(y_test, y_pred)
+auc_av = roc_auc_score(y_test, y_prob, average='micro')
+print('Classification Accuracy: ', ca_av)
+print('AUC: ', auc_av)
 
-# # y_pred = np.zeros(out.shape)
-# # y_pred[np.where(out>=0.5)] = 1
-
-# ca_av = accuracy_score(y_test, y_pred)
-# auc_av = roc_auc_score(y_test, out, average='micro')
-# print('Classification Accuracy: ', ca_av)
-# print('AUC: ', auc_av)
-
-# aucs = roc_auc_score(y_test, out, average=None)
-
-# with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
-#     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
-#     writer.writerow(['Term', 'auc'])
-#     for i, auc in enumerate(aucs):
-#         writer.writerow([termdict[i], auc])
-
-
-# # Visualize some true labels, probs and preds
-# for x in range(10):
-#     true = y_test[x]
-#     pred_prob = out[x]
-#     pred = y_pred[x]
-#     print('\nTrue ', true[np.where(true==1)])
-#     print('Prob ', pred_prob[np.where(true==1)])
-#     print('Pred', pred[np.where(true==1)])
-#     print('Pred', pred[np.where(pred==1)])
-#     print('Prob ', pred_prob[np.where(pred==1)])
-#     print('True ', true[np.where(pred==1)])
-
-
-# # Top layer and "fingerprint" output
-# get_fp_layer_output = K.function([model.layers[0].input, K.learning_phase()],
-#                                   [model.layers[-2].output])
-# fp = get_fp_layer_output([X_test, 0])[0]
-# print(' "Fingerprint": ')
-# print(fp)
-# get_top_layer_output = K.function([model.layers[0].input, K.learning_phase()],
-#                                  [model.layers[-1].output])
-# top_out = get_top_layer_output([X_test, 0])[0]
-# print(' Output: ')
-# print(top_out)
-
-# # Summarize accuracy history
-# plt.plot(history.history['acc'])
-# plt.plot(history.history['val_acc'])
-# plt.title('model accuracy')
-# plt.ylabel('accuracy')
-# plt.xlabel('epoch')
-# plt.legend(['train', 'val'], loc='upper left')
-# plt.savefig(DATA_LOC+'AccuracyHistory.png')
-
-# # Summarize loss history
-# plt.figure(2)
-# plt.plot(history.history['loss'])
-# plt.plot(history.history['val_loss'])
-# plt.title('model loss')
-# plt.ylabel('loss')
-# plt.xlabel('epoch')
-# plt.legend(['train', 'val'], loc='upper left')
-# plt.savefig(DATA_LOC+'LossHistory.png')
+# AUC for each term
+aucs = roc_auc_score(y_test, y_prob, average=None)
+with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
+    writer.writerow(['Term', 'auc'])
+    for i, auc in enumerate(aucs):
+        writer.writerow([termdict[i], auc])
+        

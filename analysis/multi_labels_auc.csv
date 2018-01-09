@@ -1,214 +1,192 @@
 Term;auc
-5-alpha Reductase Inhibitors;0.883737864078
-Adjuvants, Anesthesia;0.892660847074
-Adjuvants, Immunologic;0.710738747554
-Adrenergic Agents;0.985443959243
-Adrenergic Uptake Inhibitors;0.981976148076
-Adrenergic alpha-1 Receptor Antagonists;0.952739948119
-Adrenergic alpha-2 Receptor Agonists;0.836833714563
-Adrenergic alpha-Agonists;0.952478134111
-Adrenergic alpha-Antagonists;0.907055961071
-Adrenergic beta-1 Receptor Agonists;0.984132751938
-Adrenergic beta-1 Receptor Antagonists;1.0
-Adrenergic beta-2 Receptor Agonists;0.996006776379
-Adrenergic beta-Agonists;0.864966222291
-Adrenergic beta-Antagonists;0.97725098331
-Affinity Labels;0.715291262136
-Alkylating Agents;0.844902912621
-Amebicides;0.981275221953
-Anabolic Agents;0.995084951456
-Analgesics;0.600806555187
-Analgesics, Non-Narcotic;0.971442434325
-Analgesics, Opioid;0.888961474949
-Androgen Antagonists;0.849175557711
-Anesthetics;0.835838991271
-Anesthetics, Intravenous;0.924264468154
-Anesthetics, Local;0.93632323855
-Angiogenesis Inhibitors;0.920258272801
-Angiotensin II Type 1 Receptor Blockers;0.943023497609
-Angiotensin-Converting Enzyme Inhibitors;0.959236384054
-Antacids;0.975532945736
-Anthelmintics;0.866856368564
-Anti-Allergic Agents;0.871356456603
-Anti-Anxiety Agents;0.815893539501
-Anti-Arrhythmia Agents;0.868010335917
-Anti-Asthmatic Agents;0.995152690257
-Anti-Bacterial Agents;0.860636978097
-Anti-HIV Agents;0.683933203632
-Anti-Infective Agents;0.70771288275
-Anti-Infective Agents, Local;0.758911132812
-Anti-Infective Agents, Urinary;0.838662790698
-Anti-Inflammatory Agents;0.934795165734
-Anti-Inflammatory Agents, Non-Steroidal;0.822333398014
-Anti-Ulcer Agents;0.854421104055
-Antibiotics, Antineoplastic;0.828351227809
-Anticarcinogenic Agents;0.893873262205
-Anticholesteremic Agents;0.690533980583
-Anticoagulants;0.722373591075
-Anticonvulsants;0.865716343784
-Antidepressive Agents;0.840703781513
-Antidepressive Agents, Second-Generation;0.959037900875
-Antidepressive Agents, Tricyclic;0.960349006302
-Antidotes;0.856447688564
-Antiemetics;0.802720162593
-Antifungal Agents;0.65227959137
-Antihypertensive Agents;0.861664637841
-Antimalarials;0.858841036415
-Antimetabolites;0.894767300195
-Antimetabolites, Antineoplastic;0.865221626887
-Antimutagenic Agents;0.915130940834
-Antinematodal Agents;0.92701897019
-Antineoplastic Agents;0.718355510065
-Antineoplastic Agents, Alkylating;0.92677382692
-Antineoplastic Agents, Hormonal;0.854247572816
-Antineoplastic Agents, Phytogenic;0.799589650855
-Antioxidants;0.864608276078
-Antiparkinson Agents;0.905183966862
-Antiprotozoal Agents;0.783813476562
-Antipruritics;0.992597087379
-Antipsychotic Agents;0.852444225722
-Antirheumatic Agents;0.733670222721
-Antitubercular Agents;0.658858885402
-Antitussive Agents;0.901064125748
-Antiviral Agents;0.793431540847
-Appetite Depressants;1.0
-Bone Density Conservation Agents;0.879538183336
-Bronchodilator Agents;0.82416502947
-Calcium Channel Blockers;0.801519000139
-Calcium Chelating Agents;0.847397348852
-Carcinogens;0.83074231256
-Cardiotonic Agents;0.903752524716
-Cardiovascular Agents;0.774134381434
-Cariostatic Agents;0.88500727802
-Cathartics;0.980176058779
-Central Nervous System Stimulants;0.753076798182
-Chelating Agents;0.884924610208
-Cholagogues and Choleretics;0.94996766893
-Cholinergic Antagonists;1.0
-Cholinesterase Inhibitors;0.83741894334
-Cholinesterase Reactivators;1.0
-Chromogenic Compounds;0.984511132623
-Coccidiostats;0.751447385866
-Coloring Agents;0.932831330071
-Contraceptives, Oral, Synthetic;0.995639534884
-Contrast Media;0.900460107685
-Convulsants;0.649345930233
-Cross-Linking Reagents;0.908816366293
-Cyclooxygenase Inhibitors;0.899052169222
-Cysteine Proteinase Inhibitors;0.856012728157
-Cytochrome P-450 CYP1A2 Inhibitors;0.701793504605
-Dermatologic Agents;0.635972300206
-Detergents;0.982751425789
-Disinfectants;0.811540330418
-Diuretics;0.858107934551
-Dopamine Agents;0.892684108527
-Dopamine Agonists;0.825536062378
-Dopamine Antagonists;0.930141670738
-Dopamine Uptake Inhibitors;0.898786407767
-Endothelin Receptor Antagonists;0.801797862002
-Enzyme Inhibitors;0.772012181464
-Estrogen Antagonists;0.838256658596
-Excitatory Amino Acid Antagonists;0.737595086887
-Expectorants;0.82132816287
-Factor Xa Inhibitors;0.619781553398
-Fibrinolytic Agents;0.473530840214
-Fluorescent Dyes;0.87176170479
-Folic Acid Antagonists;0.995934061077
-Food Additives;0.974406204556
-Free Radical Scavengers;0.777643064985
-Fungicides, Industrial;0.84297860317
-GABA Antagonists;0.677460009695
-GABA Modulators;0.950664420737
-Gastrointestinal Agents;0.688806152344
-Glucocorticoids;0.993008268482
-Glycoside Hydrolase Inhibitors;0.889987864078
-HIV Protease Inhibitors;0.992248062016
-Hallucinogens;0.972551466001
-Hematinics;0.700726392252
-Hemostatics;0.424870675719
-Herbicides;0.952661132812
-Histamine Agonists;1.0
-Histamine Antagonists;0.855755220981
-Histamine H1 Antagonists;0.924620101306
-Histamine H1 Antagonists, Non-Sedating;0.858652447891
-Histamine H2 Antagonists;0.999515269026
-Histone Deacetylase Inhibitors;0.933745155039
-Hormone Antagonists;0.704858945034
-Hormones;0.612221414729
-Hydroxymethylglutaryl-CoA Reductase Inhibitors;0.94799773022
-Hypnotics and Sedatives;0.88017578125
-Hypoglycemic Agents;0.825231481481
-Hypolipidemic Agents;0.711868809872
-Immunosuppressive Agents;0.797938911764
-Indicators and Reagents;0.821416968486
-Insecticides;0.757235625511
-Intercalating Agents;0.997698643411
-Iron Chelating Agents;0.668679980516
-Lipoxygenase Inhibitors;0.754555571011
-Matrix Metalloproteinase Inhibitors;0.820899809962
-Monoamine Oxidase Inhibitors;0.762006363466
-Muscarinic Agonists;0.992413236481
-Muscarinic Antagonists;0.837018762183
-Muscle Relaxants, Central;0.791532240244
-Mutagens;0.858333333333
-Mydriatics;0.847780468119
-Narcotic Antagonists;0.96311585991
-Narcotics;0.931037290344
-Neurokinin-1 Receptor Antagonists;0.974838843834
-Neuromuscular Nondepolarizing Agents;0.811127308066
-Neuroprotective Agents;0.649675066143
-Neurotoxins;0.652249254869
-Neurotransmitter Agents;0.354065632072
-Nicotinic Antagonists;0.987802183232
-Nitric Oxide Donors;0.90809994064
-Nootropic Agents;0.901516377961
-Nucleic Acid Synthesis Inhibitors;0.691776102464
-Ornithine Decarboxylase Inhibitors;0.997770237518
-Oxidants;0.96632751938
-Oxytocics;0.9998385795
-Parasympatholytics;0.897916666667
-Parasympathomimetics;0.940285852713
-Phosphodiesterase Inhibitors;0.765939140161
-Photosensitizing Agents;0.933707517568
-Plant Growth Regulators;0.960930683471
-Platelet Aggregation Inhibitors;0.696046149857
-Poly(ADP-ribose) Polymerase Inhibitors;0.939254598258
-Potassium Channel Blockers;0.722249151721
-Protease Inhibitors;0.896612390043
-Protein Kinase Inhibitors;0.759142803668
-Protein Synthesis Inhibitors;0.770406920078
-Proton Pump Inhibitors;0.958009708738
-Psychotropic Drugs;0.839640950995
-Purinergic P1 Receptor Antagonists;0.90140503876
-Radiation-Protective Agents;0.839310009718
-Radiation-Sensitizing Agents;0.763175840234
-Radiopharmaceuticals;0.86069228275
-Reducing Agents;0.95505981248
-Reverse Transcriptase Inhibitors;0.811833171678
-Rodenticides;0.698786407767
-Schistosomicides;0.981813773036
-Serine Proteinase Inhibitors;0.940672486259
-Serotonin Antagonists;0.850917853635
-Serotonin Receptor Agonists;0.891430664063
-Serotonin Uptake Inhibitors;0.840809652185
-Solvents;0.899564375605
-Surface-Active Agents;0.872244057646
-Sweetening Agents;0.947736882235
-Sympatholytics;0.795681117064
-Sympathomimetics;0.948808681293
-Teratogens;0.754672330097
-Tocolytic Agents;0.781118655027
-Topoisomerase I Inhibitors;0.994784991382
-Topoisomerase II Inhibitors;0.947186016726
-Trace Elements;0.991274842462
-Trypanocidal Agents;0.85928315729
-Tubulin Modulators;0.624101068999
-Uncoupling Agents;0.765543772094
-Uricosuric Agents;0.457000968992
-Urological Agents;0.830212386511
-Vasoconstrictor Agents;0.819146546884
-Vasodilator Agents;0.810242011801
-Vitamin B Complex;0.976920705864
-Vitamins;0.768713662791
-Voltage-Gated Sodium Channel Blockers;0.906772024676
-beta-Lactamase Inhibitors;0.815063168124
+5-alpha Reductase Inhibitors;0.907322404372
+Adjuvants, Anesthesia;0.970931292145
+Adjuvants, Immunologic;0.61137687188
+Adrenergic Agents;0.930016402406
+Adrenergic Uptake Inhibitors;0.895156383108
+Adrenergic alpha-1 Receptor Antagonists;0.954751484839
+Adrenergic alpha-2 Receptor Agonists;0.950844013754
+Adrenergic alpha-Agonists;0.874656404618
+Adrenergic alpha-Antagonists;0.895982854864
+Adrenergic beta-1 Receptor Agonists;0.8653217012
+Adrenergic beta-1 Receptor Antagonists;0.9538918412
+Adrenergic beta-2 Receptor Agonists;0.993992353905
+Adrenergic beta-Agonists;0.824013157895
+Adrenergic beta-Antagonists;0.899145796933
+Alkylating Agents;0.87693989071
+Amebicides;0.50507971241
+Anabolic Agents;0.869508196721
+Analgesics;0.815714285714
+Analgesics, Non-Narcotic;0.687350478469
+Analgesics, Opioid;0.962531547272
+Androgen Antagonists;0.781420765027
+Anesthetics;0.797651556526
+Anesthetics, Intravenous;0.83035170987
+Anesthetics, Local;0.852567818224
+Angiogenesis Inhibitors;0.777141298418
+Angiotensin II Type 1 Receptor Blockers;0.991377591707
+Angiotensin-Converting Enzyme Inhibitors;0.965460526316
+Antacids;0.972882150672
+Anthelmintics;0.705689277899
+Anti-Allergic Agents;0.834945054945
+Anti-Anxiety Agents;0.792908530319
+Anti-Arrhythmia Agents;0.741525643688
+Anti-Asthmatic Agents;0.700163844894
+Anti-Bacterial Agents;0.936277880359
+Anti-HIV Agents;0.534754098361
+Anti-Infective Agents;0.695014015781
+Anti-Infective Agents, Local;0.862227324914
+Anti-Infective Agents, Urinary;0.8237191189
+Anti-Inflammatory Agents;0.919083287521
+Anti-Inflammatory Agents, Non-Steroidal;0.722264969222
+Anti-Ulcer Agents;0.83433056325
+Antibiotics, Antineoplastic;0.928915110551
+Anticarcinogenic Agents;0.849462365591
+Anticholesteremic Agents;0.821122408293
+Anticoagulants;0.847631512286
+Anticonvulsants;0.781792109681
+Antidepressive Agents;0.840876712329
+Antidepressive Agents, Second-Generation;0.790090653329
+Antidepressive Agents, Tricyclic;0.982690202518
+Antidotes;0.878946545796
+Antiemetics;0.796220994475
+Antifungal Agents;0.653198653199
+Antihypertensive Agents;0.765022634872
+Antimalarials;0.861348066298
+Antimetabolites;0.951953748006
+Antimetabolites, Antineoplastic;0.90457814879
+Antimutagenic Agents;0.65554948059
+Antinematodal Agents;0.700985761227
+Antineoplastic Agents;0.636046647602
+Antineoplastic Agents, Alkylating;0.758630136986
+Antineoplastic Agents, Hormonal;0.817130353235
+Antineoplastic Agents, Phytogenic;0.884090374206
+Antioxidants;0.779184078405
+Antiparkinson Agents;0.77265051085
+Antiprotozoal Agents;0.726921726922
+Antipruritics;0.931072210066
+Antipsychotic Agents;0.903589597176
+Antirheumatic Agents;0.868819776715
+Antitubercular Agents;0.76966138722
+Antitussive Agents;0.782410958904
+Antiviral Agents;0.781782389968
+Appetite Depressants;0.979825517993
+Bone Density Conservation Agents;0.87422950266
+Bronchodilator Agents;0.850022564308
+Calcium Channel Blockers;0.821010122019
+Calcium Chelating Agents;0.996040415074
+Cardiotonic Agents;0.688100042806
+Cardiovascular Agents;0.808274102424
+Cariostatic Agents;0.893224043716
+Cathartics;0.626298523783
+Central Nervous System Stimulants;0.781150318979
+Chelating Agents;0.792277926606
+Cholagogues and Choleretics;0.919506095655
+Cholinergic Antagonists;0.965692403876
+Cholinesterase Inhibitors;0.826744725249
+Cholinesterase Reactivators;0.996040415074
+Coccidiostats;0.837968500797
+Contraceptives, Oral, Synthetic;0.960065645514
+Contrast Media;0.959760093798
+Convulsants;0.788591215601
+Cyclooxygenase Inhibitors;0.683376480741
+Cysteine Proteinase Inhibitors;0.875341716785
+Cytochrome P-450 CYP1A2 Inhibitors;0.860016420361
+Dermatologic Agents;0.625263868952
+Disinfectants;0.896232057416
+Diuretics;0.827768595041
+Dopamine Agents;0.984534206696
+Dopamine Agonists;0.832330291853
+Dopamine Antagonists;0.907270718232
+Dopamine Uptake Inhibitors;0.824814409152
+Endothelin Receptor Antagonists;0.891147540984
+Enzyme Inhibitors;0.68052539833
+Estrogen Antagonists;0.934315866084
+Excitatory Amino Acid Antagonists;0.739279824079
+Expectorants;0.715585659551
+Factor Xa Inhibitors;0.94623655914
+Fibrinolytic Agents;0.671283598464
+Folic Acid Antagonists;0.939224437746
+Free Radical Scavengers;0.540708287696
+GABA Antagonists;0.770014556041
+GABA Modulators;0.92855183763
+Gastrointestinal Agents;0.692011019284
+Glucocorticoids;0.973534246575
+Glycoside Hydrolase Inhibitors;0.966776195692
+HIV Protease Inhibitors;0.809666848717
+Hallucinogens;0.76310759148
+Hematinics;0.929836065574
+Hemostatics;0.641242937853
+Histamine Agonists;0.962315674495
+Histamine Antagonists;0.827703358571
+Histamine H1 Antagonists;0.952546933284
+Histamine H1 Antagonists, Non-Sedating;0.83301474604
+Histamine H2 Antagonists;0.831638755981
+Histone Deacetylase Inhibitors;0.805540368143
+Hormone Antagonists;0.951563831082
+Hormones;0.714207650273
+Hydroxymethylglutaryl-CoA Reductase Inhibitors;0.973993076079
+Hypnotics and Sedatives;0.78172089452
+Hypoglycemic Agents;0.776799761874
+Hypolipidemic Agents;0.750922151039
+Immunosuppressive Agents;0.753221598545
+Iron Chelating Agents;0.679566751856
+Lipoxygenase Inhibitors;0.766020631447
+Matrix Metalloproteinase Inhibitors;0.791902389597
+Monoamine Oxidase Inhibitors;0.853235386058
+Muscarinic Agonists;0.827007099945
+Muscarinic Antagonists;0.920780711825
+Muscle Relaxants, Central;0.821487151449
+Mydriatics;0.904266958425
+Narcotic Antagonists;0.888372516858
+Narcotics;0.901444505394
+Neurokinin-1 Receptor Antagonists;0.944505194095
+Neuromuscular Nondepolarizing Agents;0.996860047847
+Neuroprotective Agents;0.560340098738
+Neurotransmitter Agents;0.821420765027
+Nicotinic Antagonists;0.946584724515
+Nitric Oxide Donors;0.929978118162
+Nootropic Agents;0.768102029622
+Nucleic Acid Synthesis Inhibitors;0.797414792488
+Ornithine Decarboxylase Inhibitors;0.928259683579
+Oxytocics;0.868637110016
+Parasympatholytics;0.918214878647
+Parasympathomimetics;0.786448087432
+Phosphodiesterase Inhibitors;0.767592374676
+Photosensitizing Agents;0.954562077162
+Plant Growth Regulators;0.794101583834
+Platelet Aggregation Inhibitors;0.6370807107
+Poly(ADP-ribose) Polymerase Inhibitors;0.762999452655
+Potassium Channel Blockers;0.536935621273
+Protease Inhibitors;0.767336910194
+Protein Kinase Inhibitors;0.813800657174
+Protein Synthesis Inhibitors;0.824397171342
+Proton Pump Inhibitors;0.978469945355
+Psychotropic Drugs;0.876505199781
+Purinergic P1 Receptor Antagonists;0.875477880939
+Radiation-Protective Agents;0.944960816475
+Radiation-Sensitizing Agents;0.823873038159
+Radiopharmaceuticals;0.947912863576
+Reverse Transcriptase Inhibitors;0.781061850027
+Schistosomicides;0.81768558952
+Serine Proteinase Inhibitors;0.731869184455
+Serotonin Antagonists;0.874364640884
+Serotonin Receptor Agonists;0.865536989095
+Serotonin Uptake Inhibitors;0.947000121699
+Sympatholytics;0.971945205479
+Sympathomimetics;0.924133781277
+Tocolytic Agents;0.999454446263
+Topoisomerase I Inhibitors;0.680783741025
+Topoisomerase II Inhibitors;0.813539141897
+Trace Elements;0.979496992892
+Trypanocidal Agents;0.780081060542
+Tubulin Modulators;0.905439941585
+Uncoupling Agents;0.573688694171
+Uricosuric Agents;0.721615720524
+Urological Agents;0.868461538462
+Vasoconstrictor Agents;0.805815446707
+Vasodilator Agents;0.655483568075
+Vitamin B Complex;0.936776556777
+Vitamins;0.868104860732
+Voltage-Gated Sodium Channel Blockers;0.839969896004
+beta-Lactamase Inhibitors;0.812151116427
