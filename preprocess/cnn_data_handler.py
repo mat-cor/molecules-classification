@@ -6,6 +6,16 @@ import pickle
 from preprocess.load_data import loadDataset
 import numpy as np
 
+import os
+import sys
+preprocess_path = os.path.abspath(os.path.join('..'))
+# print(preprocess_path)
+if preprocess_path not in sys.path:
+    sys.path.append(preprocess_path)
+# sys.path
+
+
+
 DATA_LOC = '../data/'
 filepath = os.path.join(DATA_LOC, 'dataset.tab')
 
