@@ -1,3 +1,5 @@
+import pickle
+
 def stringtolist(s):
     '''Convert a string that represents a list into a list object'''
     li = []
@@ -67,13 +69,17 @@ def loadDataset(dataset):
     return [cids, smiles, names, formulas, terms, treeids, tset]
 
 
-def write_dataset(fname, cids, smiles, names, formulas, terms):
-    file = open(fname, 'w')
-    file.write('Cid\tSmiles\tName\tFormula\tTerm_List\tTreeId\n')
+def write_dataset(path, fname, cids, smiles, names, formulas, terms):
+    with open(path + 'mesh_term2id.pickle', 'rb') as handle:
+        term2id = pickle.load(handle)
+
+    file = open(path+fname, 'w')
+    file.write('Cid\tSmiles\tName\tFormula\tTerm_List\tTreeIds\n')
     file.write('string\tstring\tstring\tstring\tstring\tstring\n')
     file.write('\t\t\t\t\tmeta\n')
 
     for c, s, n, f, t_list in zip(cids, smiles, names, formulas, terms):
-        file.write('%s\t%s\t%s\t%s\t%s\t%s\n' % (c, s, n, f, str(t_list), "[' ']"))
+        tid_list = [term2id[t] for t in t_list]
+        file.write('%s\t%s\t%s\t%s\t%s\t%s\n' % (c, s, n, f, str(list(set(t_list))), str(list(set(tid_list)))))
 
     file.close()
