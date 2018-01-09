@@ -1,0 +1,192 @@
+Term	AUCmean
+5-alpha Reductase Inhibitors	0.914
+Adjuvants, Anesthesia	0.986
+Adjuvants, Immunologic	0.790
+Adrenergic Agents	0.976
+Adrenergic Uptake Inhibitors	0.944
+Adrenergic alpha-1 Receptor Antagonists	0.940
+Adrenergic alpha-2 Receptor Agonists	0.917
+Adrenergic alpha-Agonists	0.928
+Adrenergic alpha-Antagonists	0.932
+Adrenergic beta-1 Receptor Agonists	0.971
+Adrenergic beta-1 Receptor Antagonists	0.999
+Adrenergic beta-2 Receptor Agonists	0.988
+Adrenergic beta-Agonists	0.948
+Adrenergic beta-Antagonists	0.957
+Alkylating Agents	0.837
+Amebicides	0.690
+Anabolic Agents	0.969
+Analgesics	0.861
+Analgesics, Non-Narcotic	0.831
+Analgesics, Opioid	0.969
+Androgen Antagonists	0.938
+Anesthetics	0.798
+Anesthetics, Intravenous	0.944
+Anesthetics, Local	0.928
+Angiogenesis Inhibitors	0.835
+Angiotensin II Type 1 Receptor Blockers	0.997
+Angiotensin-Converting Enzyme Inhibitors	0.971
+Antacids	0.978
+Anthelmintics	0.847
+Anti-Allergic Agents	0.866
+Anti-Anxiety Agents	0.869
+Anti-Arrhythmia Agents	0.850
+Anti-Asthmatic Agents	0.806
+Anti-Bacterial Agents	0.945
+Anti-HIV Agents	0.827
+Anti-Infective Agents	0.785
+Anti-Infective Agents, Local	0.892
+Anti-Infective Agents, Urinary	0.940
+Anti-Inflammatory Agents	0.912
+Anti-Inflammatory Agents, Non-Steroidal	0.817
+Anti-Ulcer Agents	0.831
+Antibiotics, Antineoplastic	0.920
+Anticarcinogenic Agents	0.923
+Anticholesteremic Agents	0.874
+Anticoagulants	0.863
+Anticonvulsants	0.852
+Antidepressive Agents	0.866
+Antidepressive Agents, Second-Generation	0.933
+Antidepressive Agents, Tricyclic	0.974
+Antidotes	0.930
+Antiemetics	0.891
+Antifungal Agents	0.787
+Antihypertensive Agents	0.834
+Antimalarials	0.897
+Antimetabolites	0.935
+Antimetabolites, Antineoplastic	0.939
+Antimutagenic Agents	0.808
+Antinematodal Agents	0.882
+Antineoplastic Agents	0.725
+Antineoplastic Agents, Alkylating	0.878
+Antineoplastic Agents, Hormonal	0.922
+Antineoplastic Agents, Phytogenic	0.877
+Antioxidants	0.843
+Antiparkinson Agents	0.847
+Antiprotozoal Agents	0.818
+Antipruritics	0.938
+Antipsychotic Agents	0.925
+Antirheumatic Agents	0.876
+Antitubercular Agents	0.770
+Antitussive Agents	0.909
+Antiviral Agents	0.848
+Appetite Depressants	0.959
+Bone Density Conservation Agents	0.991
+Bronchodilator Agents	0.924
+Calcium Channel Blockers	0.918
+Calcium Chelating Agents	0.983
+Cardiotonic Agents	0.862
+Cardiovascular Agents	0.907
+Cariostatic Agents	0.965
+Cathartics	0.889
+Central Nervous System Stimulants	0.884
+Chelating Agents	0.892
+Cholagogues and Choleretics	0.935
+Cholinergic Antagonists	0.935
+Cholinesterase Inhibitors	0.862
+Cholinesterase Reactivators	0.965
+Coccidiostats	0.882
+Contraceptives, Oral, Synthetic	0.981
+Contrast Media	0.976
+Convulsants	0.827
+Cyclooxygenase Inhibitors	0.895
+Cysteine Proteinase Inhibitors	0.910
+Cytochrome P-450 CYP1A2 Inhibitors	0.972
+Dermatologic Agents	0.833
+Disinfectants	0.936
+Diuretics	0.935
+Dopamine Agents	0.976
+Dopamine Agonists	0.894
+Dopamine Antagonists	0.948
+Dopamine Uptake Inhibitors	0.900
+Endothelin Receptor Antagonists	0.875
+Enzyme Inhibitors	0.763
+Estrogen Antagonists	0.944
+Excitatory Amino Acid Antagonists	0.867
+Expectorants	0.892
+Factor Xa Inhibitors	0.974
+Fibrinolytic Agents	0.803
+Folic Acid Antagonists	0.958
+Free Radical Scavengers	0.790
+GABA Antagonists	0.793
+GABA Modulators	0.972
+Gastrointestinal Agents	0.849
+Glucocorticoids	0.993
+Glycoside Hydrolase Inhibitors	0.938
+HIV Protease Inhibitors	0.993
+Hallucinogens	0.904
+Hematinics	0.967
+Hemostatics	0.796
+Histamine Agonists	0.980
+Histamine Antagonists	0.899
+Histamine H1 Antagonists	0.921
+Histamine H1 Antagonists, Non-Sedating	0.857
+Histamine H2 Antagonists	0.962
+Histone Deacetylase Inhibitors	0.866
+Hormone Antagonists	0.944
+Hormones	0.924
+Hydroxymethylglutaryl-CoA Reductase Inhibitors	0.970
+Hypnotics and Sedatives	0.895
+Hypoglycemic Agents	0.858
+Hypolipidemic Agents	0.818
+Immunosuppressive Agents	0.753
+Iron Chelating Agents	0.890
+Lipoxygenase Inhibitors	0.740
+Matrix Metalloproteinase Inhibitors	0.846
+Monoamine Oxidase Inhibitors	0.905
+Muscarinic Agonists	0.947
+Muscarinic Antagonists	0.949
+Muscle Relaxants, Central	0.919
+Mydriatics	0.922
+Narcotic Antagonists	0.943
+Narcotics	0.976
+Neurokinin-1 Receptor Antagonists	0.960
+Neuromuscular Nondepolarizing Agents	1.000
+Neuroprotective Agents	0.777
+Neurotransmitter Agents	0.904
+Nicotinic Antagonists	0.971
+Nitric Oxide Donors	0.950
+Nootropic Agents	0.871
+Nucleic Acid Synthesis Inhibitors	0.835
+Ornithine Decarboxylase Inhibitors	0.982
+Oxytocics	0.968
+Parasympatholytics	0.920
+Parasympathomimetics	0.946
+Phosphodiesterase Inhibitors	0.841
+Photosensitizing Agents	0.908
+Plant Growth Regulators	0.895
+Platelet Aggregation Inhibitors	0.745
+Poly(ADP-ribose) Polymerase Inhibitors	0.808
+Potassium Channel Blockers	0.757
+Protease Inhibitors	0.842
+Protein Kinase Inhibitors	0.850
+Protein Synthesis Inhibitors	0.907
+Proton Pump Inhibitors	0.933
+Psychotropic Drugs	0.891
+Purinergic P1 Receptor Antagonists	0.942
+Radiation-Protective Agents	0.838
+Radiation-Sensitizing Agents	0.809
+Radiopharmaceuticals	0.944
+Reverse Transcriptase Inhibitors	0.943
+Schistosomicides	0.855
+Serine Proteinase Inhibitors	0.831
+Serotonin Antagonists	0.863
+Serotonin Receptor Agonists	0.924
+Serotonin Uptake Inhibitors	0.970
+Sympatholytics	0.946
+Sympathomimetics	0.962
+Tocolytic Agents	0.930
+Topoisomerase I Inhibitors	0.874
+Topoisomerase II Inhibitors	0.897
+Trace Elements	0.980
+Trypanocidal Agents	0.899
+Tubulin Modulators	0.921
+Uncoupling Agents	0.856
+Uricosuric Agents	0.903
+Urological Agents	0.942
+Vasoconstrictor Agents	0.899
+Vasodilator Agents	0.791
+Vitamin B Complex	0.977
+Vitamins	0.980
+Voltage-Gated Sodium Channel Blockers	0.869
+beta-Lactamase Inhibitors	0.888
