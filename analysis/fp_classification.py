@@ -5,16 +5,16 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 
 path = '../data/'
-with open(path+'termdict.pickle', 'rb') as handle:
+with open(path+'noph_termdict.pickle', 'rb') as handle:
     termdict = pickle.load(handle)
 
-X = np.load(path + 'smiles_morgan.npy')
-labels = np.load(path + 'smiles_morgan_labels.npy')
+X = np.load(path + 'noph_smiles_fp.npy')
+labels = np.load(path + 'noph_multi_labels.npy')
 
 print(X.shape)
 print(labels.shape)
 
-f = open(path+'LRauc_morgan.tab', 'w')
+f = open(path+'LRauc_CNNfp.tab', 'w')
 f.write('Term\tAUCmean\n')
 k = 0
 

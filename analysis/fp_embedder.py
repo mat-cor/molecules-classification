@@ -16,7 +16,7 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 path = '../data/'
-smiles = np.load(path+'smiles.npy')
+smiles = np.load(path+'noph_smiles.npy')
 
 t = Tokenizer(filters='', lower=False, char_level=True)
 t.fit_on_texts(smiles)
@@ -27,4 +27,4 @@ model = load_model('fp-embedder.h5')
 embedder = Model(inputs=model.input, outputs=model.layers[-2].output)
 fps = embedder.predict(data, batch_size=1000)
 
-np.save(path+'smiles_fp.npy', fps)
+np.save(path+'noph_smiles_fp.npy', fps)

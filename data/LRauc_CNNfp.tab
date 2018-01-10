@@ -1,192 +1,25 @@
 Term	AUCmean
-5-alpha Reductase Inhibitors	0.997
-Adjuvants, Anesthesia	0.997
-Adjuvants, Immunologic	0.994
-Adrenergic Agents	0.997
-Adrenergic Uptake Inhibitors	0.999
-Adrenergic alpha-1 Receptor Antagonists	1.000
-Adrenergic alpha-2 Receptor Agonists	0.997
-Adrenergic alpha-Agonists	0.999
-Adrenergic alpha-Antagonists	1.000
-Adrenergic beta-1 Receptor Agonists	0.996
-Adrenergic beta-1 Receptor Antagonists	1.000
-Adrenergic beta-2 Receptor Agonists	1.000
-Adrenergic beta-Agonists	0.999
-Adrenergic beta-Antagonists	1.000
-Alkylating Agents	0.996
-Amebicides	0.990
-Anabolic Agents	0.996
-Analgesics	0.996
-Analgesics, Non-Narcotic	0.991
-Analgesics, Opioid	1.000
-Androgen Antagonists	0.997
-Anesthetics	0.995
-Anesthetics, Intravenous	0.988
-Anesthetics, Local	0.999
-Angiogenesis Inhibitors	0.995
-Angiotensin II Type 1 Receptor Blockers	1.000
-Angiotensin-Converting Enzyme Inhibitors	1.000
-Antacids	0.998
-Anthelmintics	0.997
-Anti-Allergic Agents	0.998
-Anti-Anxiety Agents	0.996
-Anti-Arrhythmia Agents	0.993
-Anti-Asthmatic Agents	0.997
-Anti-Bacterial Agents	0.997
-Anti-HIV Agents	0.980
-Anti-Infective Agents	0.995
-Anti-Infective Agents, Local	0.998
-Anti-Infective Agents, Urinary	0.999
-Anti-Inflammatory Agents	0.996
-Anti-Inflammatory Agents, Non-Steroidal	0.995
-Anti-Ulcer Agents	0.999
-Antibiotics, Antineoplastic	0.999
-Anticarcinogenic Agents	0.997
-Anticholesteremic Agents	0.992
-Anticoagulants	0.984
-Anticonvulsants	0.992
-Antidepressive Agents	0.994
-Antidepressive Agents, Second-Generation	0.998
-Antidepressive Agents, Tricyclic	0.998
-Antidotes	0.998
-Antiemetics	0.999
-Antifungal Agents	0.992
-Antihypertensive Agents	0.996
-Antimalarials	0.999
-Antimetabolites	0.993
-Antimetabolites, Antineoplastic	0.998
-Antimutagenic Agents	0.993
-Antinematodal Agents	0.999
-Antineoplastic Agents	0.990
-Antineoplastic Agents, Alkylating	0.998
-Antineoplastic Agents, Hormonal	0.997
-Antineoplastic Agents, Phytogenic	0.997
-Antioxidants	0.995
-Antiparkinson Agents	0.999
-Antiprotozoal Agents	0.997
-Antipruritics	0.993
-Antipsychotic Agents	0.999
-Antirheumatic Agents	0.995
-Antitubercular Agents	0.964
-Antitussive Agents	0.998
-Antiviral Agents	0.996
-Appetite Depressants	0.998
-Bone Density Conservation Agents	1.000
-Bronchodilator Agents	0.998
-Calcium Channel Blockers	0.997
-Calcium Chelating Agents	1.000
-Cardiotonic Agents	0.998
-Cardiovascular Agents	0.997
-Cariostatic Agents	0.998
-Cathartics	0.997
-Central Nervous System Stimulants	0.997
-Chelating Agents	0.999
-Cholagogues and Choleretics	0.997
-Cholinergic Antagonists	0.999
-Cholinesterase Inhibitors	0.996
-Cholinesterase Reactivators	0.993
-Coccidiostats	0.997
-Contraceptives, Oral, Synthetic	0.993
-Contrast Media	0.998
-Convulsants	0.996
-Cyclooxygenase Inhibitors	0.998
-Cysteine Proteinase Inhibitors	0.995
-Cytochrome P-450 CYP1A2 Inhibitors	0.994
-Dermatologic Agents	0.985
-Disinfectants	0.993
-Diuretics	0.989
-Dopamine Agents	0.998
-Dopamine Agonists	0.998
-Dopamine Antagonists	0.998
-Dopamine Uptake Inhibitors	0.999
-Endothelin Receptor Antagonists	1.000
-Enzyme Inhibitors	0.982
-Estrogen Antagonists	0.999
-Excitatory Amino Acid Antagonists	0.998
-Expectorants	0.998
-Factor Xa Inhibitors	1.000
-Fibrinolytic Agents	0.991
-Folic Acid Antagonists	0.999
-Free Radical Scavengers	0.993
-GABA Antagonists	0.997
-GABA Modulators	0.999
-Gastrointestinal Agents	0.979
-Glucocorticoids	1.000
-Glycoside Hydrolase Inhibitors	0.991
-HIV Protease Inhibitors	0.999
-Hallucinogens	0.998
-Hematinics	0.999
-Hemostatics	0.989
-Histamine Agonists	0.999
-Histamine Antagonists	0.997
-Histamine H1 Antagonists	0.999
-Histamine H1 Antagonists, Non-Sedating	0.997
-Histamine H2 Antagonists	1.000
-Histone Deacetylase Inhibitors	1.000
-Hormone Antagonists	1.000
-Hormones	0.976
-Hydroxymethylglutaryl-CoA Reductase Inhibitors	1.000
-Hypnotics and Sedatives	0.996
-Hypoglycemic Agents	0.997
-Hypolipidemic Agents	0.996
-Immunosuppressive Agents	0.985
-Iron Chelating Agents	0.998
-Lipoxygenase Inhibitors	0.999
-Matrix Metalloproteinase Inhibitors	0.999
-Monoamine Oxidase Inhibitors	0.996
-Muscarinic Agonists	0.998
-Muscarinic Antagonists	1.000
-Muscle Relaxants, Central	1.000
-Mydriatics	0.997
-Narcotic Antagonists	1.000
-Narcotics	1.000
-Neurokinin-1 Receptor Antagonists	1.000
-Neuromuscular Nondepolarizing Agents	0.996
-Neuroprotective Agents	0.995
-Neurotransmitter Agents	0.967
-Nicotinic Antagonists	0.998
-Nitric Oxide Donors	0.992
-Nootropic Agents	0.998
-Nucleic Acid Synthesis Inhibitors	0.994
-Ornithine Decarboxylase Inhibitors	0.998
-Oxytocics	1.000
-Parasympatholytics	0.999
-Parasympathomimetics	0.999
-Phosphodiesterase Inhibitors	0.998
-Photosensitizing Agents	0.995
-Plant Growth Regulators	0.992
-Platelet Aggregation Inhibitors	0.985
-Poly(ADP-ribose) Polymerase Inhibitors	0.981
-Potassium Channel Blockers	0.999
-Protease Inhibitors	0.999
-Protein Kinase Inhibitors	1.000
-Protein Synthesis Inhibitors	0.999
-Proton Pump Inhibitors	1.000
-Psychotropic Drugs	0.997
-Purinergic P1 Receptor Antagonists	0.996
-Radiation-Protective Agents	0.994
-Radiation-Sensitizing Agents	0.994
-Radiopharmaceuticals	0.995
-Reverse Transcriptase Inhibitors	0.999
-Schistosomicides	0.997
-Serine Proteinase Inhibitors	0.999
-Serotonin Antagonists	0.997
-Serotonin Receptor Agonists	0.999
-Serotonin Uptake Inhibitors	1.000
-Sympatholytics	0.998
-Sympathomimetics	0.998
-Tocolytic Agents	0.970
-Topoisomerase I Inhibitors	1.000
-Topoisomerase II Inhibitors	0.999
-Trace Elements	0.999
-Trypanocidal Agents	1.000
-Tubulin Modulators	1.000
-Uncoupling Agents	0.999
-Uricosuric Agents	0.989
-Urological Agents	0.999
-Vasoconstrictor Agents	0.999
-Vasodilator Agents	0.996
-Vitamin B Complex	0.999
-Vitamins	0.999
-Voltage-Gated Sodium Channel Blockers	0.997
-beta-Lactamase Inhibitors	0.999
+Affinity Labels	0.759
+Carcinogens	0.759
+Chromogenic Compounds	0.832
+Coloring Agents	0.788
+Cross-Linking Reagents	0.823
+Cytochrome P-450 CYP2D6 Inhibitors	0.994
+Detergents	0.974
+Fluorescent Dyes	0.844
+Food Additives	0.866
+Fungicides, Industrial	0.786
+Herbicides	0.832
+Indicators and Reagents	0.711
+Insecticides	0.842
+Intercalating Agents	0.887
+Mutagens	0.780
+Nasal Decongestants	0.961
+Neurotoxins	0.721
+Oxidants	0.810
+Reducing Agents	0.986
+Rodenticides	0.880
+Solvents	0.890
+Surface-Active Agents	0.912
+Sweetening Agents	0.942
+Teratogens	0.832
