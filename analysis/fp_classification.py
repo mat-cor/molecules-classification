@@ -14,7 +14,6 @@ labels = np.load(path + 'smiles_morgan_labels.npy')
 print(X.shape)
 print(labels.shape)
 
-
 f = open(path+'LRauc_morgan.tab', 'w')
 f.write('Term\tAUCmean\n')
 k = 0
