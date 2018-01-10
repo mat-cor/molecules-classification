@@ -37,17 +37,17 @@ write_dataset(path, 'dataset.tab', c2, s2, n2, f2, t2)
 
 # Compute and save the memberships matrix
 # cids, smiles, names, formulas, terms, treeids, tset = loadDataset(path+'dataset.tab')
-m, term_labels = membershipMatrix(tset2, t2)
+# m, term_labels = membershipMatrix(tset2, t2)
 # saveMatrixTab(path+'memberships.tab', m2, term_labels2, cids)
 
-# Compute and save terms frequencies as a pickle dict
-f = termsFrequency(m)
-term_freq_dict = {}
-
-for i in range(len(term_labels)):
-    term_freq_dict[term_labels[i]] = f[i]
-
-with open(path+'term_freq.pickle', 'wb') as handle:
-    pickle.dump(term_freq_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-saveFreq(f, term_labels, path+'termsfreq.tab')
+# # Compute and save terms frequencies as a pickle dict
+# f = termsFrequency(m)
+# term_freq_dict = {}
+#
+# for i in range(len(term_labels)):
+#     term_freq_dict[term_labels[i]] = f[i]
+#
+# with open(path+'term_freq.pickle', 'wb') as handle:
+#     pickle.dump(term_freq_dict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+#
+# saveFreq(f, term_labels, path+'termsfreq.tab')
