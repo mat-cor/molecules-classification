@@ -7,22 +7,27 @@ from preprocess.exclude_compounds import *
 
 # First load the dataset
 path = '../data/'
+with open(path + 'mesh_term2id.pickle', 'rb') as handle:
+    term2id = pickle.load(handle)
+
 with open(path + 'mesh_id2term.pickle', 'rb') as handle:
     id2term = pickle.load(handle)
 
 cids_raw, smiles_raw, names_raw, formulas_raw, terms_raw, treeids_raw, tset_raw = loadDataset(path + 'DatasetRaw.tab')
+_, _, _, _, _, _, tset = loadDataset(path + 'dataset.tab')
 
-# Filtering Pharmacological Action terms (D27.505)
+# Filtering non-Pharma terms (terms that aren't present in the other dataset
 cids, smiles, names, formulas, terms, treeids = [], [], [], [], [], []
+
 for c, s, n, f, te, tid in zip(cids_raw, smiles_raw, names_raw, formulas_raw, terms_raw, treeids_raw):
-    tid_new = [t for t in tid if t.startswith('D27.505')]
-    if len(tid_new):
+    terms_new = [t for t in te if t not in tset]
+    if len(terms_new):
         cids.append(c)
         smiles.append(s)
         names.append(n)
         formulas.append(f)
-        terms.append([id2term[tid] for tid in tid_new])
-        treeids.append(tid_new)
+        terms.append(terms_new)
+        treeids.append([term2id[t] for t in terms_new])
 
 # "Unique" the duplicated rows (rows with the same SMILES)
 c1, s1, n1, f1, t1, tset1 = exclude_duplicate(cids, smiles, names, formulas, terms)
@@ -32,7 +37,7 @@ c1, s1, n1, f1, t1, tset1 = exclude_duplicate(cids, smiles, names, formulas, ter
 c2, s2, n2, f2, t2, tset2 = exclude_rare(20, c1, s1, n1, f1, t1, tset1)
 
 # Save the processed data
-write_dataset(path, 'dataset.tab', c2, s2, n2, f2, t2)
+write_dataset(path, 'dataset_nopharma.tab', c2, s2, n2, f2, t2)
 
 
 # Compute and save the memberships matrix

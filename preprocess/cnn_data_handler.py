@@ -17,7 +17,7 @@ if preprocess_path not in sys.path:
 
 
 DATA_LOC = '../data/'
-filepath = os.path.join(DATA_LOC, 'dataset.tab')
+filepath = os.path.join(DATA_LOC, 'dataset_nopharma.tab')
 
 
 def getSMILES(file):
@@ -45,10 +45,10 @@ def get_labels(file):
 
 
 def main():
-    np.save(DATA_LOC+'smiles', getSMILES(filepath))
+    np.save(DATA_LOC+'noph_smiles', getSMILES(filepath))
     labels, tdict = get_labels(filepath)
-    np.save(DATA_LOC+'multi_labels', labels)
-    with open(DATA_LOC+'termdict.pickle', 'wb') as handle:
+    np.save(DATA_LOC+'noph_multi_labels', labels)
+    with open(DATA_LOC+'noph_termdict.pickle', 'wb') as handle:
         pickle.dump(tdict, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
