@@ -8,14 +8,14 @@ path = '../data/'
 with open(path+'termdict.pickle', 'rb') as handle:
     termdict = pickle.load(handle)
 
-X = np.load(path + 'smiles_fp.npy')
-labels = np.load(path + 'multi_labels.npy')
+X = np.load(path + 'smiles_rdk.npy')
+labels = np.load(path + 'smiles_rdk_labels.npy')
 
 print(X.shape)
 print(labels.shape)
 
 
-f = open(path+'LRauc_CNNfp.tab', 'w')
+f = open(path+'LRauc_rdk.tab', 'w')
 f.write('Term\tAUCmean\n')
 k = 0
 
