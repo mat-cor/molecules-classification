@@ -11,7 +11,11 @@ with open(path+'termdict.pickle', 'rb') as handle:
 X = np.load(path + 'smiles_fp.npy')
 labels = np.load(path + 'multi_labels.npy')
 
-f = open(path+'LR_auc_myfp.tab', 'w')
+print(X.shape)
+print(labels.shape)
+
+
+f = open(path+'LRauc_CNNfp.tab', 'w')
 f.write('Term\tAUCmean\n')
 k = 0
 
@@ -25,7 +29,7 @@ for i in range(labels.shape[1]):
     y = labels[:, i]
     
     logreg = LogisticRegression()
-    auc = cross_val_score(logreg, X, y, cv=10, scoring='roc_auc', n_jobs=8)
+    auc = cross_val_score(logreg, X, y, cv=10, scoring='roc_auc', n_jobs=-1)
 
     f.write('%s\t%5.3f\n' % (termdict[i], auc.mean()))
     print(datetime.datetime.now())
