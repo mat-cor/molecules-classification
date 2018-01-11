@@ -3,8 +3,9 @@ import sys
 import os
 import tensorflow as tf
 
-from keras.models import load_model, Model
+
 from keras import backend as K
+from keras.models import load_model, Model
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 
