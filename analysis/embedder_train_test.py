@@ -88,8 +88,9 @@ model.add(MaxPooling1D(pool_size=2))
 model.add(Convolution1D(32, 3, activation='relu'))
 model.add(MaxPooling1D(pool_size=3))
 model.add(Dropout(0.25))
+
 model.add(Flatten())
-model.add(Dense(1024, activation='relu'))
+model.add(Dense(512, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(n_class, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -111,7 +112,7 @@ for i in range(n_class):
     accuracies.append(acc.max()) 
     best_threshold[i] = threshold[index[0][0]]
     
-y_pred = np.array([[1 if y_prob[i,j]>=best_threshold[j] else 0 for j
+y_pred = np.array([[1 if y_prob[i,j] >= best_threshold[j] else 0 for j
                     in range(n_class)] for i in range(len(y_test))])
 
 # CA and average AUC
