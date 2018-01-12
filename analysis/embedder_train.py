@@ -61,11 +61,11 @@ model.add(MaxPooling1D(pool_size=3))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
-model.add(Dense(512, activation='relu'))
+model.add(Dense(1024, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(n_class, activation='sigmoid'))
 
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
 model.fit(X, y, epochs=100, batch_size=64, verbose=1)
-model.save('fp-embedder.h5')
+model.save('fp-embedder-1024.h5')

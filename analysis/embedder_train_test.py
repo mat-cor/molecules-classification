@@ -74,10 +74,6 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 print('Number of examples: ', X_train.shape[0])
 print('Multi-label classification, number of classes: ', y.shape[1])
 
-# np.save('x_test', X_test)
-# np.save('x_seqs', X)
-# np.save('x_seqs_labels', y)
-
 sequence_length = X.shape[1]
 vocabulary_size = len(t.word_index)
 n_class = y.shape[1]
@@ -93,7 +89,7 @@ model.add(Convolution1D(32, 3, activation='relu'))
 model.add(MaxPooling1D(pool_size=3))
 model.add(Dropout(0.25))
 model.add(Flatten())
-model.add(Dense(512, activation='relu'))
+model.add(Dense(1024, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(n_class, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
@@ -126,9 +122,9 @@ print('AUC: ', auc_av)
 
 # AUC for each term
 aucs = roc_auc_score(y_test, y_prob, average=None)
-with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
-    writer.writerow(['Term', 'auc'])
-    for i, auc in enumerate(aucs):
-        writer.writerow([termdict[i], auc])
+# with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
+#     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
+#     writer.writerow(['Term', 'auc'])
+#     for i, auc in enumerate(aucs):
+#         writer.writerow([termdict[i], auc])
         
