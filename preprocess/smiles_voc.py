@@ -22,7 +22,7 @@ print(len(char_set))
 voc = {}
 
 for i, c in enumerate(char_set):
-    voc[i+1] = c
+    voc[c] = i+1
 path = '../data/'
 with open(path+'smiles_vocabulary.pickle', 'wb') as handle:
     pickle.dump(voc, handle, protocol=pickle.HIGHEST_PROTOCOL)
