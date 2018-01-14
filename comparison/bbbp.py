@@ -15,22 +15,24 @@ from sklearn.model_selection import cross_val_score
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 
-dataset_file = "bace.csv"
+current_dir = os.path.dirname(os.path.realpath("__file__"))
+
+dataset_file = "BBBP.csv"
 dataset = load_from_disk(dataset_file)
 num_display=10
 pretty_columns = (
-    "[" + ",".join(["'%s'" % column for column in dataset.columns.values[:num_display]])
-    + ",...]")
+    "[" + ",".join(["'%s'" % column for column in dataset.columns.values]))
 
-crystal_dataset_file = "crystal_desc_canvas_aug30.csv"
 
 print("Columns of dataset: %s" % pretty_columns)
 print("Number of examples in dataset: %s" % str(dataset.shape[0]))
+class_field = 'p_np'
+smiles_field = 'smiles'
 
+smiles = [m for m in dataset[smiles_field]]
+labels = [c for c in dataset[class_field]]
 
 # 10-fold CV on CNN embedding
-smiles = [m for m in dataset['mol']]
-labels = [c for c in dataset['Class']]
 print('Embedding smiles...')
 start_time = time.time()
 t = Tokenizer(filters='', lower=False, char_level=True)
@@ -54,7 +56,7 @@ print(auc_rf.mean(), auc_rf.std(), '\n')
 
 # 10-fold CV on ECFP fingerprint
 featurizer_func = dc.feat.CircularFingerprint(size=512)
-loader = dc.data.CSVLoader(tasks=["Class"], smiles_field="mol", id_field="mol",
+loader = dc.data.CSVLoader(tasks=[class_field], smiles_field=smiles_field, id_field=smiles_field,
                            featurizer=featurizer_func)
 dataset = loader.featurize(dataset_file)
 
