@@ -3,54 +3,32 @@ Exctract the list of SMILES from the dataset and convert the labels to "one-hot"
 '''
 import os
 import pickle
-from preprocess.load_data import loadDataset
+from preprocess.data_handler import load_data, term_set
 import numpy as np
 
 import os
 import sys
 preprocess_path = os.path.abspath(os.path.join('..'))
-# print(preprocess_path)
 if preprocess_path not in sys.path:
     sys.path.append(preprocess_path)
-# sys.path
-
-
 
 DATA_LOC = '../data/'
-filepath = os.path.join(DATA_LOC, 'dataset_nopharma.tab')
+filepath = os.path.join(DATA_LOC, 'dataset_46.csv')
 
+data = load_data(filepath)
+tset = term_set(data['Terms'])
+termdict = {}
+for i, t in enumerate(tset):
+    termdict[i] = t
 
-def getSMILES(file):
-    _, smiles, _, _, _, _, _ = loadDataset(file)
+labels = np.zeros((data.shape[0], len(tset)), dtype=int)
 
-    return np.array(smiles)
-
-
-def get_labels(file):
-    _, _, _, _, terms, _, term_set = loadDataset(file)
-    term2id = {}
-    id2term = {}
-
-    for i, t in zip(range(len(term_set)), term_set):
-        term2id[t] = i
-        id2term[i] = t
-
-    labels = np.zeros((len(terms), len(term_set)), dtype=int)
-    for t_list, i in zip(terms, range(len(terms))):
-        for term in t_list:
-            j = term2id[term]
+for i in range(data.shape[0]):
+    for j in range(len(tset)):
+        if termdict[j] in data['Terms'][i]:
             labels[i, j] = 1
 
-    return labels, id2term
-
-
-def main():
-    np.save(DATA_LOC+'noph_smiles', getSMILES(filepath))
-    labels, tdict = get_labels(filepath)
-    np.save(DATA_LOC+'noph_multi_labels', labels)
-    with open(DATA_LOC+'noph_termdict.pickle', 'wb') as handle:
-        pickle.dump(tdict, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-
-if __name__ == "__main__":
-    main()
+np.save(DATA_LOC+'smiles_46t', data['Smiles'])
+np.save(DATA_LOC+'labels_46t', labels)
+with open(DATA_LOC+'termdict_46t.pickle', 'wb') as handle:
+    pickle.dump(termdict, handle, protocol=pickle.HIGHEST_PROTOCOL)

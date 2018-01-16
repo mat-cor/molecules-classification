@@ -1,6 +1,4 @@
-Cid	Smiles	Name	Formula	Term_List	TreeIds
-string	string	string	string	string	string
-					meta
+Cid	Smiles	Name	Formula	Terms	TreeIds
 18499	CC[N+](C)(C)CC1=CC=CC=C1Br.[Br-]	bretylium	C11H17Br2N	['Anti-Arrhythmia Agents']	['D27.505.954.411.097']
 3354	CC1=C(OC2=C(C1=O)C=CC=C2C(=O)OCCN3CCCCC3)C4=CC=CC=C4	Flavoxate	C24H25NO4	['Parasympatholytics', 'Urological Agents']	['D27.505.696.663.050.650', 'D27.505.954.944']
 10612083	CC1(C(N2C(S1(=O)=O)CC2=O)C(=O)O)C=CC#N	Ro 48-1220	C10H10N2O5S	['beta-Lactamase Inhibitors']	['D27.505.519.389.400', 'D27.505.954.122.085.516']
