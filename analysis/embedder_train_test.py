@@ -88,9 +88,9 @@ model = Sequential()
 model.add(Embedding(output_dim=embedding_size, input_dim=vocabulary_size,
                     input_length=sequence_length))
 model.add(Convolution1D(32, 3, activation='relu'))
-model.add(MaxPooling1D(pool_size=3))
+model.add(MaxPooling1D(pool_size=2))
 model.add(Convolution1D(32, 3, activation='relu'))
-model.add(MaxPooling1D(pool_size=3))
+model.add(MaxPooling1D(pool_size=2))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
