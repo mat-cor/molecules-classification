@@ -13,7 +13,7 @@ if preprocess_path not in sys.path:
     sys.path.append(preprocess_path)
 
 DATA_LOC = '../data/'
-filepath = os.path.join(DATA_LOC, 'dataset_46.csv')
+filepath = os.path.join(DATA_LOC, 'dataset_5.csv')
 
 data = load_data(filepath)
 tset = term_set(data['Terms'])

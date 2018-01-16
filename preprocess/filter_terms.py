@@ -23,3 +23,5 @@ data_new = data
 data_new['Terms'] = new_terms
 data_new['TreeIds'] = new_tids
 data_new.to_csv(path+'dataset_5.csv', sep='\t', index=False)
+
+print(term_set(new_terms))
