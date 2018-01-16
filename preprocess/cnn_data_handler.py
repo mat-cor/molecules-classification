@@ -28,7 +28,7 @@ for i in range(data.shape[0]):
         if termdict[j] in data['Terms'][i]:
             labels[i, j] = 1
 
-np.save(DATA_LOC+'smiles_46t', data['Smiles'])
-np.save(DATA_LOC+'labels_46t', labels)
-with open(DATA_LOC+'termdict_46t.pickle', 'wb') as handle:
+np.save(DATA_LOC+'smiles_5t', data['Smiles'])
+np.save(DATA_LOC+'labels_5t', labels)
+with open(DATA_LOC+'termdict_5t.pickle', 'wb') as handle:
     pickle.dump(termdict, handle, protocol=pickle.HIGHEST_PROTOCOL)

@@ -40,7 +40,7 @@ t.fit_on_texts(smiles)
 seqs = t.texts_to_sequences(smiles)
 data = pad_sequences(seqs, padding='post', maxlen=1021)
 
-model = load_model('../analysis/fp-embedder.h5')
+model = load_model('../analysis/fp-embedder-46t.h5')
 embedder = Model(inputs=model.input, outputs=model.layers[-2].output)
 fps = embedder.predict(data, batch_size=1000)
 print('Embedding complete - %s seconds, %s smiles' % (time.time() - start_time, fps.shape[0]))
