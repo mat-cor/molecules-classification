@@ -58,18 +58,18 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 DATA_LOC = '../data/'
-with open(DATA_LOC+'termdict.pickle', 'rb') as handle:
+with open(DATA_LOC+'termdict_46t.pickle', 'rb') as handle:
     termdict = pickle.load(handle)
 with open(DATA_LOC+'smiles_vocabulary.pickle', 'rb') as handle:
     vocabulary = pickle.load(handle)    
-smiles = np.load(DATA_LOC+'smiles.npy')
+smiles = np.load(DATA_LOC+'smiles_46t.npy')
 # t = Tokenizer(filters='', lower=False, char_level=True)
 # t.fit_on_texts(smiles)
 # seqs = t.texts_to_sequences(smiles)
 seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
 
 X = pad_sequences(seqs, padding='post')
-y = np.load(DATA_LOC+'multi_labels.npy')
+y = np.load(DATA_LOC+'labels_46t.npy')
 
 seed = 7
 np.random.seed(seed)
@@ -126,7 +126,7 @@ print('Classification Accuracy: ', ca_av)
 print('AUC: ', auc_av)
 
 # AUC for each term
-aucs = roc_auc_score(y_test, y_prob, average=None)
+# aucs = roc_auc_score(y_test, y_prob, average=None)
 # with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
 #     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
 #     writer.writerow(['Term', 'auc'])

@@ -33,15 +33,15 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 DATA_LOC = '../data/'
-with open(DATA_LOC+'termdict.pickle', 'rb') as handle:
+with open(DATA_LOC+'termdict_46t.pickle', 'rb') as handle:
     termdict = pickle.load(handle)
 with open(DATA_LOC+'smiles_vocabulary.pickle', 'rb') as handle:
     vocabulary = pickle.load(handle)    
-smiles = np.load(DATA_LOC+'smiles.npy')
+smiles = np.load(DATA_LOC+'smiles_46t.npy')
 seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
 
 X = pad_sequences(seqs, padding='post')
-y = np.load(DATA_LOC+'multi_labels.npy')
+y = np.load(DATA_LOC+'labels_46t.npy')
 
 sequence_length = X.shape[1]
 vocabulary_size = len(vocabulary)
@@ -53,9 +53,9 @@ model = Sequential()
 model.add(Embedding(output_dim=embedding_size, input_dim=vocabulary_size,
                     input_length=sequence_length))
 model.add(Convolution1D(32, 3, activation='relu'))
-model.add(MaxPooling1D(pool_size=3))
+model.add(MaxPooling1D(pool_size=2))
 model.add(Convolution1D(32, 3, activation='relu'))
-model.add(MaxPooling1D(pool_size=3))
+model.add(MaxPooling1D(pool_size=2))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
@@ -65,4 +65,4 @@ model.add(Dense(n_class, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
 model.fit(X, y, epochs=100, batch_size=64, verbose=1)
-model.save('fp-embedder.h5')
+model.save('fp-embedder-46t.h5')
