@@ -1,6 +1,7 @@
 import os
 import time
 import numpy as np
+import pickle
 
 import deepchem as dc
 from deepchem.utils.save import load_from_disk
@@ -30,33 +31,34 @@ tasks = [col for col in dataset.columns.values[:12]]
 tasks_auc_cnn = []
 tasks_auc_ecfp = []
 
+smiles = dataset[smiles_field]
+# CNN embedding
+with open('../data/smiles_vocabulary.pickle', 'rb') as handle:
+    vocabulary = pickle.load(handle)
+seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
+print('Embedding smiles...')
+start_time = time.time()
+data = pad_sequences(seqs, padding='post', maxlen=1021)
+model = load_model('../analysis/fp-embedder.h5')
+embedder = Model(inputs=model.input, outputs=model.layers[-2].output)
+fps_raw = embedder.predict(data, batch_size=1000)
+print('Embedding complete - %s seconds, %s smiles' % (time.time() - start_time, fps_raw.shape[0]))
+
 for t in tasks:
     class_field = t
-    smiles = []
+    fps = []
     labels = []
-    for m, c in zip(dataset[smiles_field], dataset[class_field]):
+    for m, c in zip(fps_raw, dataset[class_field]):
         if c != '':  # exclude missing
-            smiles.append(m)
+            fps.append(m)
             labels.append(int(c))
 
     # 10-fold CV on CNN embedding
-    print('Embedding smiles...')
-    start_time = time.time()
-    tok = Tokenizer(filters='', lower=False, char_level=True)
-    tok.fit_on_texts(smiles)
-    seqs = tok.texts_to_sequences(smiles)
-    data = pad_sequences(seqs, padding='post', maxlen=1021)
 
-    model = load_model('../analysis/fp-embedder.h5')
-    embedder = Model(inputs=model.input, outputs=model.layers[-2].output)
-    fps = embedder.predict(data, batch_size=1000)
-    print('Embedding complete - %s seconds, %s smiles' % (time.time() - start_time, fps.shape[0]))
     # rf = RandomForestClassifier(n_estimators=500)
     logreg = LogisticRegression()
-    auc = cross_val_score(logreg, fps, labels, cv=10, scoring='roc_auc', n_jobs=-1)
-    print(t, '\n-----LogReg, 10-fold CV on CNN fingerprint-----')
-    print(auc.mean(), auc.std(), '\n')
-    tasks_auc_cnn.append(auc.mean())
+    auc_cnn = cross_val_score(logreg, fps, labels, cv=10, scoring='roc_auc', n_jobs=-1)
+    tasks_auc_cnn.append(auc_cnn.mean())
     # auc_rf = cross_val_score(rf, fps, labels, cv=10, scoring='roc_auc', n_jobs=-1)
     # print('\n-----RF, 10-fold CV on CNN fingerprint-----')
     # print(auc_rf.mean(), auc_rf.std(), '\n')
@@ -73,9 +75,11 @@ for t in tasks:
     print(X.shape, y.shape)
 
     auc = cross_val_score(logreg, X, y, cv=10, scoring='roc_auc', n_jobs=-1)
-    print(t, '\n-----LogReg, 10-fold CV on ECFP fingerprint-----')
+    print(t, '\n-----LogReg, 10-fold CV on CNN fingerprint-----')
+    print(auc_cnn.mean(), auc_cnn.std(), '\n')
+    print('-----LogReg, 10-fold CV on ECFP fingerprint-----')
     print(auc.mean(), auc.std())
-    tasks_auc_ecfp.append(auc.mean())
+    tasks_auc_ecfp.append(auc_cnn.mean())
     # auc_rf = cross_val_score(rf, X, y, cv=10, scoring='roc_auc', n_jobs=-1)
     # print('\n-----RF, 10-fold CV on ECFP fingerprint-----')
     # print(auc_rf.mean(), auc_rf.std(), '\n')

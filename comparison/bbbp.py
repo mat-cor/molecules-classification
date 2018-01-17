@@ -1,6 +1,7 @@
 import os
 import time
 import numpy as np
+import pickle
 
 import deepchem as dc
 from deepchem.utils.save import load_from_disk
@@ -35,24 +36,21 @@ labels = [c for c in dataset[class_field]]
 # 10-fold CV on CNN embedding
 print('Embedding smiles...')
 start_time = time.time()
-t = Tokenizer(filters='', lower=False, char_level=True)
-t.fit_on_texts(smiles)
-seqs = t.texts_to_sequences(smiles)
+with open('../data/smiles_vocabulary.pickle', 'rb') as handle:
+    vocabulary = pickle.load(handle)
+seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
 data = pad_sequences(seqs, padding='post', maxlen=1021)
 
-model = load_model('../analysis/fp-embedder-46t.h5')
+model = load_model('../analysis/fp-embedder-5t.h5')
 embedder = Model(inputs=model.input, outputs=model.layers[-2].output)
 fps = embedder.predict(data, batch_size=1000)
 print('Embedding complete - %s seconds, %s smiles' % (time.time() - start_time, fps.shape[0]))
 
 rf = RandomForestClassifier(n_estimators=500)
 logreg = LogisticRegression()
-auc = cross_val_score(logreg, fps, labels, cv=10, scoring='roc_auc', n_jobs=-1)
-print('\n-----LogReg, 10-fold CV on CNN fingerprint-----')
-print(auc.mean(), auc.std(), '\n')
-auc_rf = cross_val_score(rf, fps, labels, cv=10, scoring='roc_auc', n_jobs=-1)
-print('\n-----RF, 10-fold CV on CNN fingerprint-----')
-print(auc_rf.mean(), auc_rf.std(), '\n')
+auc_lr_cnn = cross_val_score(logreg, fps, labels, cv=10, scoring='roc_auc', n_jobs=-1)
+auc_rf_cnn = cross_val_score(rf, fps, labels, cv=10, scoring='roc_auc', n_jobs=-1)
+
 
 # 10-fold CV on ECFP fingerprint
 featurizer_func = dc.feat.CircularFingerprint(size=512)
@@ -64,10 +62,15 @@ X = np.array(dataset.X)
 y = np.array(dataset.y, dtype=np.int32)
 y = y.reshape(y.shape[0],)
 print(X.shape, y.shape)
-
-auc = cross_val_score(logreg, X, y, cv=10, scoring='roc_auc', n_jobs=-1)
-print('\n-----LogReg, 10-fold CV on ECFP fingerprint-----')
-print(auc.mean(), auc.std())
+auc_lr = cross_val_score(logreg, X, y, cv=10, scoring='roc_auc', n_jobs=-1)
 auc_rf = cross_val_score(rf, X, y, cv=10, scoring='roc_auc', n_jobs=-1)
-print('\n-----RF, 10-fold CV on ECFP fingerprint-----')
-print(auc_rf.mean(), auc_rf.std(), '\n')
+
+print('-----LogReg, 10-fold CV on CNN fingerprint-----')
+print(auc_lr_cnn.mean(), auc_lr_cnn.std())
+print('-----LogReg, 10-fold CV on ECFP fingerprint-----')
+print(auc_lr.mean(), auc_lr.std())
+
+print('-----RF, 10-fold CV on CNN fingerprint-----')
+print(auc_rf_cnn.mean(), auc_rf_cnn.std())
+print('-----RF, 10-fold CV on ECFP fingerprint-----')
+print(auc_rf.mean(), auc_rf.std())
