@@ -58,18 +58,15 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 DATA_LOC = '../data/'
-with open(DATA_LOC+'termdict.pickle', 'rb') as handle:
+with open(DATA_LOC+'termdict_5t.pickle', 'rb') as handle:
     termdict = pickle.load(handle)
 with open(DATA_LOC+'smiles_vocabulary.pickle', 'rb') as handle:
     vocabulary = pickle.load(handle)    
-smiles = np.load(DATA_LOC+'smiles.npy')
-# t = Tokenizer(filters='', lower=False, char_level=True)
-# t.fit_on_texts(smiles)
-# seqs = t.texts_to_sequences(smiles)
+smiles = np.load(DATA_LOC+'smiles_5t.npy')
 seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
 
 X = pad_sequences(seqs, padding='post')
-y = np.load(DATA_LOC+'multi_labels.npy')
+y = np.load(DATA_LOC+'labels_5t.npy')
 
 seed = 7
 np.random.seed(seed)
