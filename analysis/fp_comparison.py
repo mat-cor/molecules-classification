@@ -1,6 +1,10 @@
+import os
+import sys
+parent_path = os.path.abspath(os.path.join('..'))
+if parent_path not in sys.path:
+    sys.path.append(parent_path)
+
 import datetime
-import pickle
-import numpy as np
 import csv
 
 from sklearn.linear_model import LogisticRegression
