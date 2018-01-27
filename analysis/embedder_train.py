@@ -33,15 +33,13 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 DATA_LOC = '../data/'
-with open(DATA_LOC+'termdict_46t.pickle', 'rb') as handle:
-    termdict = pickle.load(handle)
 with open(DATA_LOC+'smiles_vocabulary.pickle', 'rb') as handle:
     vocabulary = pickle.load(handle)    
-smiles = np.load(DATA_LOC+'smiles_46t.npy')
+smiles = np.load(DATA_LOC+'smiles_5t.npy')
 seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
 
 X = pad_sequences(seqs, padding='post')
-y = np.load(DATA_LOC+'labels_46t.npy')
+y = np.load(DATA_LOC+'labels_5t.npy')
 
 sequence_length = X.shape[1]
 vocabulary_size = len(vocabulary)
@@ -65,4 +63,4 @@ model.add(Dense(n_class, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
 model.fit(X, y, epochs=100, batch_size=64, verbose=1)
-model.save('fp-embedder-46t.h5')
+model.save('fp-embedder-5t.h5')

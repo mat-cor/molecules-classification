@@ -23,31 +23,6 @@ from keras import optimizers
 from keras import regularizers
 from keras import backend as K
 
-
-# POS_WEIGHT = 10  # multiplier for positive targets, needs to be tuned
-# def weighted_binary_crossentropy(target, output):
-#     """
-#     Weighted binary crossentropy between an output tensor 
-#     and a target tensor. POS_WEIGHT is used as a multiplier 
-#     for the positive targets.
-
-#     Combination of the following functions:
-#     * keras.losses.binary_crossentropy
-#     * keras.backend.tensorflow_backend.binary_crossentropy
-#     * tf.nn.weighted_cross_entropy_with_logits
-#     """
-#     tfb = K.tensorflow_backend
-#     # transform back to logits
-#     _epsilon = tfb._to_tensor(tfb.epsilon(), output.dtype.base_dtype)
-#     output = tf.clip_by_value(output, _epsilon, 1 - _epsilon)
-#     output = tf.log(output / (1 - output))
-#     # compute weighted loss
-#     loss = tf.nn.weighted_cross_entropy_with_logits(targets=target,
-#                                                     logits=output,
-#                                                     pos_weight=POS_WEIGHT)
-#     return tf.reduce_mean(loss, axis=-1)
-
-
 # The default Tensorflow behavior is to allocate memory on all the available GPUs, even if it runs only on the selected
 # one. To avoid it, only the free GPU (defined by cmd line input)
 gpu = str(sys.argv[1])
@@ -58,15 +33,15 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 DATA_LOC = '../data/'
-with open(DATA_LOC+'termdict_5t.pickle', 'rb') as handle:
+with open(DATA_LOC+'termdict_46t.pickle', 'rb') as handle:
     termdict = pickle.load(handle)
 with open(DATA_LOC+'smiles_vocabulary.pickle', 'rb') as handle:
     vocabulary = pickle.load(handle)    
-smiles = np.load(DATA_LOC+'smiles_5t.npy')
+smiles = np.load(DATA_LOC+'smiles_46t.npy')
 seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
 
 X = pad_sequences(seqs, padding='post')
-y = np.load(DATA_LOC+'labels_5t.npy')
+y = np.load(DATA_LOC+'labels_46t.npy')
 
 seed = 7
 np.random.seed(seed)
@@ -123,10 +98,10 @@ print('Classification Accuracy: ', ca_av)
 print('AUC: ', auc_av)
 
 # AUC for each term
-# aucs = roc_auc_score(y_test, y_prob, average=None)
-# with open('multi_labels_auc.csv', 'w', newline='') as csvfile:
-#     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
-#     writer.writerow(['Term', 'auc'])
-#     for i, auc in enumerate(aucs):
-#         writer.writerow([termdict[i], auc])
+aucs = roc_auc_score(y_test, y_prob, average=None)
+with open('labels_auc_46.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
+    writer.writerow(['Term', 'auc'])
+    for i, auc in enumerate(aucs):
+        writer.writerow([termdict[i], auc])
         
