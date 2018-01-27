@@ -1,5 +1,8 @@
 import os
 import sys
+parent_path = os.path.abspath(os.path.join('..'))
+if parent_path not in sys.path:
+    sys.path.append(parent_path)
 import pickle
 import tensorflow as tf
 
@@ -52,5 +55,5 @@ model.add(Dropout(0.5))
 model.add(Dense(n_class, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
-# model.fit(X, y, epochs=100, batch_size=64, verbose=1)
-# model.save('fp-embedder.h5')
+model.fit(X, y, epochs=100, batch_size=64, verbose=1)
+model.save('fp-embedder.h5')

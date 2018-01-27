@@ -1,5 +1,8 @@
 import os
 import sys
+parent_path = os.path.abspath(os.path.join('..'))
+if parent_path not in sys.path:
+    sys.path.append(parent_path)
 import csv
 import pickle
 import numpy as np
@@ -23,6 +26,8 @@ from keras import optimizers
 from keras import regularizers
 from keras import backend as K
 
+from preprocess.data_handler import load_data, load_pickle, categorical_labels
+
 # The default Tensorflow behavior is to allocate memory on all the available GPUs, even if it runs only on the selected
 # one. To avoid it, only the free GPU (defined by cmd line input)
 gpu = str(sys.argv[1])
@@ -33,20 +38,21 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 DATA_LOC = '../data/'
-with open(DATA_LOC+'termdict_46t.pickle', 'rb') as handle:
-    termdict = pickle.load(handle)
-with open(DATA_LOC+'smiles_vocabulary.pickle', 'rb') as handle:
-    vocabulary = pickle.load(handle)    
-smiles = np.load(DATA_LOC+'smiles_46t.npy')
-seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
+termdict = load_pickle(DATA_LOC+'termdict.pickle')
+vocabulary = load_pickle(DATA_LOC+'smiles_vocabulary.pickle')
+dataset = load_data(DATA_LOC+'dataset.csv')
+smiles = dataset['SMILES']
 
+seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
 X = pad_sequences(seqs, padding='post')
-y = np.load(DATA_LOC+'labels_46t.npy')
+
+y = categorical_labels(dataset['Terms'], termdict)
+
 
 seed = 7
 np.random.seed(seed)
 # Split in train and test
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=seed)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=seed)
 print('Number of examples: ', X_train.shape[0])
 print('Multi-label classification, number of classes: ', y.shape[1])
 
@@ -99,9 +105,9 @@ print('AUC: ', auc_av)
 
 # AUC for each term
 aucs = roc_auc_score(y_test, y_prob, average=None)
-with open('labels_auc_46.csv', 'w', newline='') as csvfile:
+with open('labels_auc.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
     writer.writerow(['Term', 'auc'])
-    for i, auc in enumerate(aucs):
-        writer.writerow([termdict[i], auc])
+    for auc, t in zip(aucs, termdict.keys()):
+        writer.writerow([t, auc])
         
