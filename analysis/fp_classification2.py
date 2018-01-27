@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
 from preprocess.load_data import loadDataset
-from preprocess.rdkutils import smiles_list_fp
+from preprocess.rdkutils import fp_from_smiles
 
 import datetime
 path = '../data/'
@@ -12,7 +12,7 @@ cids, smiles, names, formulas, terms, treeids, tset = loadDataset(path+'dataset.
 
 # X is a numpy matrix containing the fingerprints
 # bad_smiles is a list of the SMILES that rdkit wasn't able to convert (only 2 for morgan and rdk fingerprint)
-X, bad_smiles = smiles_list_fp(smiles, 2, 512, 'morgan')
+X, bad_smiles = fp_from_smiles(smiles, 2, 512, 'morgan')
 
 #  Delete the rows related to chemicals with "bad" (=not-fingerprinted) SMILES
 inds = []

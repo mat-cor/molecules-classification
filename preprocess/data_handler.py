@@ -1,5 +1,6 @@
 import pandas as pd
-
+import numpy as np
+import pickle
 
 def stringtolist(s):
     '''Convert a string representing a list into a list object'''
@@ -18,11 +19,22 @@ def load_data(dataset):
     return data
 
 
-def term_set(terms):
+def get_term_set(terms):
     tl = []
-    # I want to save also a set of the terms
-    for tlist in terms:
-        [tl.append(t) for t in tlist]
+    [[tl.append(t) for t in tlist] for tlist in terms]
     tset = sorted(set(tl))
 
     return tset
+
+
+def categorical_labels(terms, tdic):
+    labels = np.zeros((len(terms), len(tdic)), dtype=int)
+    for i, ts in enumerate(terms):
+        for t in ts:
+            labels[i, tdic[t]] = 1
+    return labels
+
+
+def load_pickle(fname):
+    with open(fname, 'rb') as handle:
+        return pickle.load(handle)

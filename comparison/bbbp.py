@@ -24,7 +24,6 @@ num_display=10
 pretty_columns = (
     "[" + ",".join(["'%s'" % column for column in dataset.columns.values]))
 
-
 print("Columns of dataset: %s" % pretty_columns)
 print("Number of examples in dataset: %s" % str(dataset.shape[0]))
 class_field = 'p_np'
@@ -41,36 +40,47 @@ with open('../data/smiles_vocabulary.pickle', 'rb') as handle:
 seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
 data = pad_sequences(seqs, padding='post', maxlen=1021)
 
-model = load_model('../analysis/fp-embedder-5t.h5')
+model = load_model('../analysis/fp-embedder.h5')
 embedder = Model(inputs=model.input, outputs=model.layers[-2].output)
 fps = embedder.predict(data, batch_size=1000)
 print('Embedding complete - %s seconds, %s smiles' % (time.time() - start_time, fps.shape[0]))
 
 rf = RandomForestClassifier(n_estimators=500)
 logreg = LogisticRegression()
-auc_lr_cnn = cross_val_score(logreg, fps, labels, cv=10, scoring='roc_auc', n_jobs=-1)
-auc_rf_cnn = cross_val_score(rf, fps, labels, cv=10, scoring='roc_auc', n_jobs=-1)
+# auc_lr_cnn = cross_val_score(logreg, fps, labels, cv=10, scoring='roc_auc', n_jobs=-1)
+# auc_rf_cnn = cross_val_score(rf, fps, labels, cv=10, scoring='roc_auc', n_jobs=-1)
 
 
 # 10-fold CV on ECFP fingerprint
 featurizer_func = dc.feat.CircularFingerprint(size=512)
 loader = dc.data.CSVLoader(tasks=[class_field], smiles_field=smiles_field, id_field=smiles_field,
                            featurizer=featurizer_func)
-dataset = loader.featurize(dataset_file)
+dataset2 = loader.featurize(dataset_file)
 
-X = np.array(dataset.X)
-y = np.array(dataset.y, dtype=np.int32)
+X = np.array(dataset2.X)
+y = np.array(dataset2.y, dtype=np.int32)
 y = y.reshape(y.shape[0],)
-print(X.shape, y.shape)
-auc_lr = cross_val_score(logreg, X, y, cv=10, scoring='roc_auc', n_jobs=-1)
-auc_rf = cross_val_score(rf, X, y, cv=10, scoring='roc_auc', n_jobs=-1)
+# auc_lr = cross_val_score(logreg, X, y, cv=10, scoring='roc_auc', n_jobs=-1)
+# auc_rf = cross_val_score(rf, X, y, cv=10, scoring='roc_auc', n_jobs=-1)
 
-print('-----LogReg, 10-fold CV on CNN fingerprint-----')
-print(auc_lr_cnn.mean(), auc_lr_cnn.std())
-print('-----LogReg, 10-fold CV on ECFP fingerprint-----')
-print(auc_lr.mean(), auc_lr.std())
+# print('-----LogReg, 10-fold CV on CNN fingerprint-----')
+# print(auc_lr_cnn.mean(), auc_lr_cnn.std())
+# print('-----LogReg, 10-fold CV on ECFP fingerprint-----')
+# print(auc_lr.mean(), auc_lr.std())
 
-print('-----RF, 10-fold CV on CNN fingerprint-----')
-print(auc_rf_cnn.mean(), auc_rf_cnn.std())
-print('-----RF, 10-fold CV on ECFP fingerprint-----')
-print(auc_rf.mean(), auc_rf.std())
+# print('-----RF, 10-fold CV on CNN fingerprint-----')
+# print(auc_rf_cnn.mean(), auc_rf_cnn.std())
+# print('-----RF, 10-fold CV on ECFP fingerprint-----')
+# print(auc_rf.mean(), auc_rf.std())
+
+# Combine features, CNN-FP + ECFP
+valid_inds = [i for i, s in enumerate(smiles) if s in dataset2.ids]
+fp_combo = [np.concatenate((c, e)) for c, e in zip(fps[valid_inds], X)]
+fp_combo = np.array(fp_combo)
+
+auc_lr = cross_val_score(logreg, fp_combo, y, cv=10, scoring='roc_auc', n_jobs=-1)
+auc_rf = cross_val_score(rf, fp_combo, y, cv=10, scoring='roc_auc', n_jobs=-1)
+print('-----LogReg, 10-fold CV on combined fingerprints-----')
+print(auc_lr.mean())
+print('-----RF, 10-fold CV on combined fingerprints-----')
+print(auc_rf.mean())

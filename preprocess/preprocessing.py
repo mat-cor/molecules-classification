@@ -32,7 +32,7 @@ c1, s1, n1, f1, t1, tset1 = exclude_duplicate(cids, smiles, names, formulas, ter
 c2, s2, n2, f2, t2, tset2 = exclude_rare(20, c1, s1, n1, f1, t1, tset1)
 
 # Save the processed data
-write_dataset(path, 'dataset.tab', c2, s2, n2, f2, t2)
+write_dataset(path, 'dataset.tab', c2, s2, n2, f2, t2, ti2)
 
 
 # Compute and save the memberships matrix
