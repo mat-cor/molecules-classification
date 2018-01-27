@@ -25,9 +25,10 @@ def fp_from_smiles(s_list, radius, fplength, t):
     inds = []
     fps = np.empty([len(s_list), fplength], dtype=np.int32)
     for i, smile in enumerate(s_list):
-        fp = smiles2fp(smile, radius, fplength, t).ToBitString()
+        fp = smiles2fp(smile, radius, fplength, t)
         if fp is not None:
-            for j, bit in enumerate(list(fp)):
+            fpstr = fp.ToBitString()
+            for j, bit in enumerate(list(fpstr)):
                 fps[i, j] = bit
             inds.append(i)
-    return fps, inds
+    return fps[inds], inds

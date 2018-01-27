@@ -66,12 +66,12 @@ if __name__ == "__main__":
     d = filt_terms(d, 'D27.505')
     d = filt_duplicates(d)
     d = filt_rares(d, 20)
-    # d.to_csv('../data/dataset.csv', sep='\t', index=False)
-    # fdict = terms_freq(d['Terms'])
-    # with open('../data/terms_freq.csv', 'w') as csv_file:
-    #     writer = csv.writer(csv_file, delimiter='\t')
-    #     for key, value in fdict.items():
-    #         writer.writerow([key, value])
+    d.to_csv('../data/dataset.csv', sep='\t', index=False)
+    fdict = terms_freq(d['Terms'])
+    with open('../data/terms_freq.csv', 'w') as csv_file:
+        writer = csv.writer(csv_file, delimiter='\t')
+        for key, value in fdict.items():
+            writer.writerow([key, value])
 
     tset = get_term_set(d['Terms'])
     tdict = {t:i for i, t in enumerate(tset)}

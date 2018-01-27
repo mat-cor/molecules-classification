@@ -110,4 +110,3 @@ with open('labels_auc.csv', 'w', newline='') as csvfile:
     writer.writerow(['Term', 'auc'])
     for auc, t in zip(aucs, termdict.keys()):
         writer.writerow([t, auc])
-        

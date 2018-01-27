@@ -22,7 +22,7 @@ pretty_columns = (
     "[" + ",".join(["'%s'" % column for column in dataset.columns.values[:num_display]])
     + ",...]")
 print("Columns of dataset: %s" % pretty_columns)
-print("Number of examples in dataset: %s" % str(dataset.shape[0]))
+
 
 smiles_field = 'mol'
 class_field = 'Class'

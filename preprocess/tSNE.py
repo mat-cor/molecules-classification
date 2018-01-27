@@ -1,16 +1,16 @@
+import time
+
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import time
+from ggplot import *
+from sklearn.decomposition import PCA
+from sklearn.manifold import TSNE
 
 from preprocess.data_handler import load_data
 from preprocess.rdkutils import fp_from_smiles
-from analysis.molecule_embedder import get_cnn_fingerprint
+from preprocess.smiles_embedder import get_cnn_fingerprint
 
-from sklearn.manifold import TSNE
-from sklearn.decomposition import PCA
-
-import matplotlib.pyplot as plt
-from ggplot import *
 '''
 t-SNE visualization comparison using CNN-FP and ECFP. 10 un-correlated terms are selected as labels
 '''
