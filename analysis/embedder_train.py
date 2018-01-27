@@ -1,30 +1,18 @@
 import os
 import sys
-import csv
 import pickle
-import numpy as np
 import tensorflow as tf
-import matplotlib
-matplotlib.use('Agg')
-from matplotlib import pyplot as plt
 
-
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold
-from sklearn.metrics import matthews_corrcoef, jaccard_similarity_score
-from sklearn.metrics import hamming_loss, accuracy_score, roc_auc_score, f1_score
-
-from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential, Model
-from keras.layers import Convolution1D, MaxPooling1D, GlobalMaxPooling1D, Dropout, Dense, Flatten
+from keras.layers import Convolution1D, MaxPooling1D, Dropout, Dense, Flatten
 from keras.layers.embeddings import Embedding
-from keras import optimizers
-from keras import regularizers
 from keras import backend as K
 
+from preprocess.data_handler import load_data, load_pickle, categorical_labels
+
 # The default Tensorflow behavior is to allocate memory on all the available GPUs, even if it runs only on the selected
-# one. To avoid it, only the free GPU (defined by cmd line input)
+# one. To avoid it, select by cmd line input the free GPU
 gpu = str(sys.argv[1])
 os.environ["CUDA_VISIBLE_DEVICES"] = gpu
 config = tf.ConfigProto()
@@ -33,15 +21,15 @@ sess = tf.Session(config=config)
 K.set_session(sess)
 
 DATA_LOC = '../data/'
-with open(DATA_LOC+'termdict_46t.pickle', 'rb') as handle:
-    termdict = pickle.load(handle)
-with open(DATA_LOC+'smiles_vocabulary.pickle', 'rb') as handle:
-    vocabulary = pickle.load(handle)    
-smiles = np.load(DATA_LOC+'smiles_46t.npy')
-seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
+termdict = load_pickle(DATA_LOC+'termdict.pickle')
+vocabulary = load_pickle(DATA_LOC+'smiles_vocabulary.pickle')
+dataset = load_data(DATA_LOC+'dataset.csv')
+smiles = dataset['SMILES']
 
+seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
 X = pad_sequences(seqs, padding='post')
-y = np.load(DATA_LOC+'labels_46t.npy')
+
+y = categorical_labels(dataset['Terms'], termdict)
 
 sequence_length = X.shape[1]
 vocabulary_size = len(vocabulary)
@@ -64,5 +52,5 @@ model.add(Dropout(0.5))
 model.add(Dense(n_class, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 print(model.summary())
-model.fit(X, y, epochs=100, batch_size=64, verbose=1)
-model.save('fp-embedder-46t.h5')
+# model.fit(X, y, epochs=100, batch_size=64, verbose=1)
+# model.save('fp-embedder.h5')

@@ -3,13 +3,13 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import metrics
 
-from preprocess.rdkutils import smiles_list_fp
+from preprocess.rdkutils import fp_from_smiles
 
 DATA_LOC = '../data/'
 smiles = list(np.load(DATA_LOC+'smiles.npy'))
 y = np.load(DATA_LOC+'multi_labels.npy')
 
-X, bad_smiles = smiles_list_fp(smiles, 2, 1024, 'morgan')
+X, bad_smiles = fp_from_smiles(smiles, 2, 1024, 'morgan')
 
 inds = [smiles.index(s) for s in bad_smiles]
 for i in sorted(inds, reverse=True):  # Sorted in reverse order to be sure to not mess with indices

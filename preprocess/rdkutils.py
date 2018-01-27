@@ -10,7 +10,9 @@ def smiles2fp(smiles, radius, fplength, t):
 
     m = Chem.MolFromSmiles(smiles)
 
-    if t == 'morgan':
+    if m is None:
+        return None
+    elif t == 'morgan' or t == 'ecfp':
         return AllChem.GetMorganFingerprintAsBitVect(m, radius, nBits=fplength)
     elif t == 'rdk':
         return RDKFingerprint(m, fpSize=fplength)
@@ -18,23 +20,14 @@ def smiles2fp(smiles, radius, fplength, t):
         return AllChem.GetMorganFingerprintAsBitVect(m, radius, nBits=fplength)
 
 
-def fp2intarray(fp):
-    fps = fp.ToBitString()
-
-    return np.array(list(fps), dtype=int)
-
-
-def smiles_list_fp(s_list, radius, fplength, t):
-    '''Return a matrix representing the data and a list of the SMILES that couldn't be converted'''
-
-    fpdata = np.empty((len(s_list), fplength), dtype=int)
-    badsmiles = []
-
-    for smile, i in zip(s_list, range(len(s_list))):
-        try:
-            fp = smiles2fp(smile, radius, fplength, t)
-            fpdata[i] = fp2intarray(fp)
-        except:
-            badsmiles.append(smile)
-
-    return fpdata, badsmiles
+def fp_from_smiles(s_list, radius, fplength, t):
+    '''Return a matrix representing the data and the inds of valid mols'''
+    inds = []
+    fps = np.empty([len(s_list), fplength], dtype=np.int32)
+    for i, smile in enumerate(s_list):
+        fp = smiles2fp(smile, radius, fplength, t).ToBitString()
+        if fp is not None:
+            for j, bit in enumerate(list(fp)):
+                fps[i, j] = bit
+            inds.append(i)
+    return fps, inds

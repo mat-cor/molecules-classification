@@ -69,17 +69,14 @@ def loadDataset(dataset):
     return [cids, smiles, names, formulas, terms, treeids, tset]
 
 
-def write_dataset(path, fname, cids, smiles, names, formulas, terms):
-    with open(path + 'mesh_term2id.pickle', 'rb') as handle:
-        term2id = pickle.load(handle)
+def write_dataset(path, fname, cids, smiles, names, formulas, terms, tids):
 
     file = open(path+fname, 'w')
     file.write('Cid\tSmiles\tName\tFormula\tTerm_List\tTreeIds\n')
     file.write('string\tstring\tstring\tstring\tstring\tstring\n')
     file.write('\t\t\t\t\tmeta\n')
 
-    for c, s, n, f, t_list in zip(cids, smiles, names, formulas, terms):
-        tid_list = [term2id[t] for t in t_list]
-        file.write('%s\t%s\t%s\t%s\t%s\t%s\n' % (c, s, n, f, str(list(set(t_list))), str(list(set(tid_list)))))
+    for c, s, n, f, te, ti in zip(cids, smiles, names, formulas, terms, tids):
+        file.write('%s\t%s\t%s\t%s\t%s\t%s\n' % (c, s, n, f, str(list(set(te))), str(list(set(ti)))))
 
     file.close()
