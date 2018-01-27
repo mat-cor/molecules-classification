@@ -33,19 +33,20 @@ with open('LRauc.csv', 'w', newline='') as csvfile:
     writer.writerow(['Term', 'CNNFP', 'ECFP'])
 
     k = 0
-    for i, t in enumerate(termdict.keys()):
+    for t in termdict.keys():
 
         k += 1
         print(k)
         print(datetime.datetime.now())
 
-        y = labels[:, i]
-        y_ecfp = ecfp_labels[:, i]
+        y = labels[:, termdict[t]]
+        y_ecfp = ecfp_labels[:, termdict[t]]
 
         logreg = LogisticRegression()
 
         auc_cnnfp = cross_val_score(logreg, cnn_fp_data, y, cv=10, scoring='roc_auc', n_jobs=-1)
         auc_ecfp = cross_val_score(logreg, ecfp_data, y_ecfp, cv=10, scoring='roc_auc', n_jobs=-1)
 
-        writer.writerow([t, auc_cnnfp, auc_ecfp])
+        writer.writerow([t, auc_cnnfp.mean(), auc_ecfp.mean()])
+        print(t, auc_cnnfp.mean(), auc_ecfp.mean())
         print(datetime.datetime.now())

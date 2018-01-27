@@ -74,6 +74,7 @@ if __name__ == "__main__":
             writer.writerow([key, value])
 
     tset = get_term_set(d['Terms'])
-    tdict = {t:i for i, t in enumerate(tset)}
+    tdict = {t: i for i, t in enumerate(tset)}
     with open('../data/termdict.pickle', 'wb') as handle:
         pickle.dump(tdict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+
