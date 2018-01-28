@@ -14,6 +14,16 @@ from sklearn.model_selection import cross_val_score
 from preprocess.data_handler import load_data, categorical_labels, load_pickle
 from preprocess.smiles_embedder import get_cnn_fingerprint
 
+import tensorflow as tf
+from keras import backend as K
+
+gpu = str(sys.argv[1])
+os.environ["CUDA_VISIBLE_DEVICES"] = gpu
+config = tf.ConfigProto()
+config.gpu_options.allow_growth=True
+sess = tf.Session(config=config)
+K.set_session(sess)
+
 path = '../data/'
 termdict = load_pickle(path+'termdict.pickle')
 
