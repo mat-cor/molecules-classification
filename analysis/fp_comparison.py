@@ -6,6 +6,7 @@ if parent_path not in sys.path:
 
 import datetime
 import csv
+import numpy as np
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import cross_val_score
@@ -22,13 +23,17 @@ smiles = dataset['SMILES']
 labels = categorical_labels(dataset['Terms'], termdict)
 
 cnn_fp_data = get_cnn_fingerprint(smiles)
-ecfp_data, valid_inds = fp_from_smiles(smiles, 2, 512, 'ecfp')
-ecfp_labels = labels[valid_inds]
+ecfp_d = load_pickle('../data/ecfp-data.pickle')
+ecfp_l = load_pickle('../data/ecfp-labels.pickle')
+ecfp_data, ecfp_labels = [], []
+for cid in sorted(ecfp_d.keys()):
+    ecfp_data.append(ecfp_d[cid])
+    ecfp_labels.append(ecfp_l[cid])
 
-print(cnn_fp_data.shape, labels.shape)
-print(ecfp_data.shape, ecfp_labels.shape)
+ecfp_data = np.array(ecfp_data)
+ecfp_labels = np.array(ecfp_labels)
 
-with open('LRauc.csv', 'w', newline='') as csvfile:
+with open('../results/LRauc.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
     writer.writerow(['Term', 'CNNFP', 'ECFP'])
 

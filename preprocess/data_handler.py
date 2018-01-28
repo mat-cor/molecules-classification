@@ -35,3 +35,8 @@ def categorical_labels(terms, tdic):
 def load_pickle(fname):
     with open(fname, 'rb') as handle:
         return pickle.load(handle)
+
+
+def save_pickle(dictionary, fname):
+    with open(fname, 'wb') as handle:
+        pickle.dump(dictionary, handle, protocol=pickle.HIGHEST_PROTOCOL)

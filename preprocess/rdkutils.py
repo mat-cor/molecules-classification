@@ -3,6 +3,7 @@ from rdkit.Chem import AllChem
 from rdkit.Chem.rdmolops import RDKFingerprint
 import numpy as np
 
+from preprocess.data_handler import load_data, load_pickle, save_pickle, categorical_labels
 
 def smiles2fp(smiles, radius, fplength, t):
 
@@ -32,3 +33,19 @@ def fp_from_smiles(s_list, radius, fplength, t):
                 fps[i, j] = bit
             inds.append(i)
     return fps[inds], inds
+
+
+if __name__ == "__main__":
+    dataset = '../data/dataset.csv'
+    df = load_data(dataset)
+    tdict = load_pickle('../data/termdict.pickle')
+    labels = categorical_labels(df['Terms'], tdict)
+    fps, inds = fp_from_smiles(df['SMILES'], 2, 512, 'ecfp')
+    labels = labels[inds]
+    cids = df['CID']
+    cids = cids[inds]
+    fp = {c: f for c, f in zip(cids, fps)}
+    lab = {c: l for c, l in zip(cids, labels)}
+    save_pickle(fp, '../data/ecfp-data.pickle')
+    save_pickle(lab, '../data/ecfp-labels.pickle')
+
