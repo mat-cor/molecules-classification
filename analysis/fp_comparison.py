@@ -13,7 +13,6 @@ from sklearn.model_selection import cross_val_score
 
 from preprocess.data_handler import load_data, categorical_labels, load_pickle
 from preprocess.smiles_embedder import get_cnn_fingerprint
-from preprocess.rdkutils import fp_from_smiles
 
 path = '../data/'
 termdict = load_pickle(path+'termdict.pickle')
