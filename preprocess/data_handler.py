@@ -20,8 +20,10 @@ def load_data(dataset):
 
 
 def get_term_set(terms):
-    tl = [[t for t in tlist] for tlist in terms]
-    return sorted(set(tl))
+    tl = []
+    [[tl.append(t) for t in tlist] for tlist in terms]
+    tset = sorted(set(tl))
+    return tset
 
 
 def categorical_labels(terms, tdic):

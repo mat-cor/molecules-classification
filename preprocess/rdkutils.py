@@ -36,9 +36,9 @@ def fp_from_smiles(s_list, radius, fplength, t):
 
 
 if __name__ == "__main__":
-    dataset = '../data/dataset.csv'
+    dataset = '../data/dataset_nopharma.csv'
     df = load_data(dataset)
-    tdict = load_pickle('../data/termdict.pickle')
+    tdict = load_pickle('../data/termdict_nopharma.pickle')
     labels = categorical_labels(df['Terms'], tdict)
     fps, inds = fp_from_smiles(df['SMILES'], 2, 512, 'ecfp')
     labels = labels[inds]
@@ -46,6 +46,6 @@ if __name__ == "__main__":
     cids = cids[inds]
     fp = {c: f for c, f in zip(cids, fps)}
     lab = {c: l for c, l in zip(cids, labels)}
-    save_pickle(fp, '../data/ecfp-data.pickle')
-    save_pickle(lab, '../data/ecfp-labels.pickle')
+    save_pickle(fp, '../data/ecfp-noph-data.pickle')
+    save_pickle(lab, '../data/ecfp-noph-labels.pickle')
 

@@ -59,22 +59,44 @@ def terms_per_cp(df):
     return tpcp
 
 
+def filt_nopharma(df, prefix, tset):
+    with open('../data/mesh_id2term.pickle', 'rb') as handle:
+        id2term = pickle.load(handle)
+    inds = []
+    for i, tids in enumerate(df['TreeIds']):
+        tids_new = list(set([t for t in tids if not t.startswith(prefix)]))
+        if len(tids_new):
+            df.at[i, 'Terms'] = list(set([id2term[tid] for tid in tids_new if id2term[tid] not in tset]))
+            df.at[i, 'TreeIds'] = tids_new
+        else:
+            inds.append(i)
+    df = df.drop(df.index[inds])
+    return df.reset_index(drop=True)
+
+
 if __name__ == "__main__":
 
-    d = load_data('../data/DatasetRaw.csv')
-    print(d.shape)
-    d = filt_terms(d, 'D27.505')
+    d_raw = load_data('../data/DatasetRaw.csv')
+    print(d_raw.shape)
+    d = filt_terms(d_raw, 'D27.505')
     d = filt_duplicates(d)
     d = filt_rares(d, 20)
-    d.to_csv('../data/dataset.csv', sep='\t', index=False)
-    fdict = terms_freq(d['Terms'])
-    with open('../data/terms_freq.csv', 'w') as csv_file:
-        writer = csv.writer(csv_file, delimiter='\t')
-        for key, value in fdict.items():
-            writer.writerow([key, value])
-
-    tset = get_term_set(d['Terms'])
+    # d.to_csv('../data/dataset.csv', sep='\t', index=False)
+    # fdict = terms_freq(d['Terms'])
+    # with open('../data/terms_freq.csv', 'w') as csv_file:
+    #     writer = csv.writer(csv_file, delimiter='\t')
+    #     for key, value in fdict.items():
+    #         writer.writerow([key, value])
+    #
+    # tset = get_term_set(d['Terms'])
+    # tdict = {t: i for i, t in enumerate(tset)}
+    # with open('../data/termdict.pickle', 'wb') as handle:
+    #     pickle.dump(tdict, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    d_noph = filt_nopharma(d_raw, 'D27.505', get_term_set(d['Terms']))
+    d_noph = filt_duplicates(d_noph)
+    d_noph = filt_rares(d_noph, 20)
+    d_noph.to_csv('../data/dataset_nopharma.csv', sep='\t', index=False)
+    tset = get_term_set(d_noph['Terms'])
     tdict = {t: i for i, t in enumerate(tset)}
-    with open('../data/termdict.pickle', 'wb') as handle:
+    with open('../data/termdict_nopharma.pickle', 'wb') as handle:
         pickle.dump(tdict, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
