@@ -105,7 +105,7 @@ print('AUC: ', auc_av)
 
 # AUC for each term
 aucs = roc_auc_score(y_test, y_prob, average=None)
-with open('labels_auc.csv', 'w', newline='') as csvfile:
+with open('../results/labels_auc.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
     writer.writerow(['Term', 'auc'])
     for auc, t in zip(aucs, termdict.keys()):
