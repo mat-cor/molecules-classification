@@ -39,7 +39,7 @@ seqs = [[vocabulary[c] for c in list(s)] for s in smiles]
 print('Embedding smiles...')
 start_time = time.time()
 data = pad_sequences(seqs, padding='post', maxlen=1021)
-model = load_model('../analysis/fp-embedder-46t.h5')
+model = load_model('../analysis/smiles-cnn-embedder-46t.h5')
 embedder = Model(inputs=model.input, outputs=model.layers[-2].output)
 fps_raw = embedder.predict(data, batch_size=1000)
 print('Embedding complete - %s seconds, %s smiles' % (time.time() - start_time, fps_raw.shape[0]))
