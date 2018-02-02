@@ -9,6 +9,7 @@ import csv
 import numpy as np
 
 from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 
 from preprocess.data_handler import load_data, categorical_labels, load_pickle
@@ -35,11 +36,11 @@ labels = categorical_labels(dataset['Terms'], termdict)
 ecfp_data, inds = fp_from_smiles(smiles, 2, 512, 'ecfp')
 cnn_fp_data = get_cnn_fingerprint(smiles[inds])
 labels = labels[inds]
+#
+# fp_combo = [np.concatenate((c, e)) for c, e in zip(cnn_fp_data, ecfp_data)]
+# fp_combo = np.array(fp_combo)
 
-fp_combo = [np.concatenate((c, e)) for c, e in zip(cnn_fp_data, ecfp_data)]
-fp_combo = np.array(fp_combo)
-
-with open('../results/LRauc_nopharma_comb.csv', 'w', newline='') as csvfile:
+with open('../results/RFauc_nopharma.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile, delimiter=';', quoting=csv.QUOTE_MINIMAL)
     writer.writerow(['Term', 'FP-comb'])
 
@@ -52,10 +53,12 @@ with open('../results/LRauc_nopharma_comb.csv', 'w', newline='') as csvfile:
 
         y = labels[:, termdict[t]]
 
-        logreg = LogisticRegression()
+        rf = RandomForestClassifier(n_estimators=500)
+        auc_cnn = cross_val_score(rf, cnn_fp_data, y, cv=10, scoring='roc_auc', n_jobs=-1)
 
-        auc = cross_val_score(logreg, fp_combo, y, cv=10, scoring='roc_auc', n_jobs=-1)
+        rf_e = RandomForestClassifier(n_estimators=500)
+        auc_e = cross_val_score(rf, ecfp_data, y, cv=10, scoring='roc_auc', n_jobs=-1)
 
-        writer.writerow([t, auc.mean()])
-        print(t, auc.mean())
+        writer.writerow([t, auc_cnn.mean(), auc_e.mean()])
+
         print(datetime.datetime.now())
