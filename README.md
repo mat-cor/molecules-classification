@@ -1,19 +1,18 @@
 # molecules-classification
-Small molecules classification using deep learning models
+Molecular Fingerprinting using Convolutional Neural Networks
+
+Thesis: https://drive.google.com/file/d/14NGjNjBP556-1O41aVnxtnCsaD3ysDbt/view?usp=sharing
+
+Presentation: https://drive.google.com/file/d/1mCnuNT3BZWk5fKrfiMssRGjEPFwotYwT/view?usp=sharing
 
 Notebooks:
 
-- SMILES CNN Embedder: https://github.com/mat-cor/molecules-classification/blob/master/notebooks/smiles-cnn-embedder.ipynb
+- CNN Fingerprint Model: https://github.com/mat-cor/molecules-classification/blob/master/notebooks/smiles-cnn-embedder.ipynb
 
-- Basic Statistics: https://github.com/mat-cor/molecules-classification/blob/master/notebooks/basic-statistics.ipynb
+- Basic Data Statistics: https://github.com/mat-cor/molecules-classification/blob/master/notebooks/basic-statistics.ipynb
 
 - CNNFP vs ECFP comparison: https://github.com/mat-cor/molecules-classification/blob/master/notebooks/fp-comparison.ipynb
 
 - CNNFP vs ECFP on ClinTox dataset: https://github.com/mat-cor/molecules-classification/blob/master/notebooks/clintox-comparison.ipynb
 
 - tSNE visualization: https://github.com/mat-cor/molecules-classification/blob/master/notebooks/tSNE-visualization.ipynb
-
-Packages:
-- "preprocess" package contains the modules for preprocessing the data (basically discarding duplicated chemicals and non frequent terms, compute the "memberships" for the terms and convert the SMILES to fingerprints)
-
-- "analysis" package contains fingerprint classification with LR and SMILES classification using CNN
