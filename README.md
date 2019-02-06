@@ -1,6 +1,7 @@
 # molecules-classification
 Molecular Fingerprinting using Convolutional Neural Networks
 
+
 Thesis: https://drive.google.com/file/d/14NGjNjBP556-1O41aVnxtnCsaD3ysDbt/view?usp=sharing
 
 Presentation: https://drive.google.com/file/d/1mCnuNT3BZWk5fKrfiMssRGjEPFwotYwT/view?usp=sharing
